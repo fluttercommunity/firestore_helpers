@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="API docs for the Area class from the firestore_helpers library, for the Dart programming language.">
+  <title>Area class - firestore_helpers library - Dart API</title>
+  <!-- required because all the links are pseudo-absolute -->
+  <base href="..">
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500,400i,400,300|Source+Sans+Pro:400,300,700" rel="stylesheet">
+  <link rel="stylesheet" href="static-assets/github.css">
+  <link rel="stylesheet" href="static-assets/styles.css">
+  <link rel="icon" href="static-assets/favicon.png">
+
+</head>
+
+<body>
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="index.html">firestore_helpers</a></li>
+    <li><a href="firestore_helpers/firestore_helpers-library.html">firestore_helpers</a></li>
+    <li class="self-crumb">Area class</li>
+  </ol>
+  <div class="self-name">Area</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
+    <h5>firestore_helpers library</h5>
+    <ol>
+      <li class="section-title"><a href="firestore_helpers/firestore_helpers-library.html#classes">Classes</a></li>
+      <li><a href="firestore_helpers/Area-class.html">Area</a></li>
+      <li><a href="firestore_helpers/GeoBoundingBox-class.html">GeoBoundingBox</a></li>
+      <li><a href="firestore_helpers/OrderConstraint-class.html">OrderConstraint</a></li>
+      <li><a href="firestore_helpers/QueryConstraint-class.html">QueryConstraint</a></li>
+    
+    
+    
+      <li class="section-title"><a href="firestore_helpers/firestore_helpers-library.html#functions">Functions</a></li>
+      <li><a href="firestore_helpers/boundingBoxCoordinates.html">boundingBoxCoordinates</a></li>
+      <li><a href="firestore_helpers/buildQuery.html">buildQuery</a></li>
+      <li><a href="firestore_helpers/degreesToRadians.html">degreesToRadians</a></li>
+      <li><a href="firestore_helpers/distance.html">distance</a></li>
+      <li><a href="firestore_helpers/getData.html">getData</a></li>
+      <li><a href="firestore_helpers/getLocationsConstraint.html">getLocationsConstraint</a></li>
+      <li><a href="firestore_helpers/metersToLongitudeDegrees.html">metersToLongitudeDegrees</a></li>
+      <li><a href="firestore_helpers/wrapLongitude.html">wrapLongitude</a></li>
+    
+    
+      <li class="section-title"><a href="firestore_helpers/firestore_helpers-library.html#typedefs">Typedefs</a></li>
+      <li><a href="firestore_helpers/DocumentMapper.html">DocumentMapper</a></li>
+    
+    </ol>
+  </div>
+
+  <div class="col-xs-12 col-sm-9 col-md-8 main-content">
+    <h1>Area class</h1>
+
+    <section class="desc markdown">
+      <p>Defines the search area by a  circle <a href="firestore_helpers/Area/center.html">center</a> / <a href="firestore_helpers/Area/radius.html">radius</a>
+Based on the limitations of FireStore we can only search in rectangles
+which means that from this definition a final search square is calculated
+that contains the circle</p>
+    </section>
+    
+
+    <section class="summary offset-anchor" id="constructors">
+      <h2>Constructors</h2>
+
+      <dl class="constructor-summary-list">
+        <dt id="Area" class="callable">
+          <span class="name"><a href="firestore_helpers/Area/Area.html">Area</a></span><span class="signature">(<span class="parameter" id="-param-center"><span class="type-annotation">GeoPoint</span> <span class="parameter-name">center</span>, </span> <span class="parameter" id="-param-radius"><span class="type-annotation">double</span> <span class="parameter-name">radius</span></span>)</span>
+        </dt>
+        <dd>
+          
+        </dd>
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="instance-properties">
+      <h2>Properties</h2>
+
+      <dl class="properties">
+        <dt id="center" class="property">
+          <span class="name"><a href="firestore_helpers/Area/center.html">center</a></span>
+          <span class="signature">&#8594; GeoPoint</span>
+        </dt>
+        <dd>
+          
+          <div class="features">final</div>
+</dd>
+        <dt id="radius" class="property">
+          <span class="name"><a href="firestore_helpers/Area/radius.html">radius</a></span>
+          <span class="signature">&#8594; double</span>
+        </dt>
+        <dd>
+          
+          <div class="features">final</div>
+</dd>
+        <dt id="hashCode" class="property inherited">
+          <span class="name"><a href="firestore_helpers/Area/hashCode.html">hashCode</a></span>
+          <span class="signature">&#8594; int</span>
+        </dt>
+        <dd class="inherited">
+          The hash code for this object. <a href="firestore_helpers/Area/hashCode.html">[...]</a>
+          <div class="features">read-only, inherited</div>
+</dd>
+        <dt id="runtimeType" class="property inherited">
+          <span class="name"><a href="firestore_helpers/Area/runtimeType.html">runtimeType</a></span>
+          <span class="signature">&#8594; Type</span>
+        </dt>
+        <dd class="inherited">
+          A representation of the runtime type of the object.
+          <div class="features">read-only, inherited</div>
+</dd>
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor inherited" id="instance-methods">
+      <h2>Methods</h2>
+      <dl class="callables">
+        <dt id="noSuchMethod" class="callable inherited">
+          <span class="name"><a href="firestore_helpers/Area/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation">Invocation</span> <span class="parameter-name">invocation</span></span>)
+            <span class="returntype parameter">&#8594; dynamic</span>
+          </span>
+        </dt>
+        <dd class="inherited">
+          Invoked when a non-existent method or property is accessed. <a href="firestore_helpers/Area/noSuchMethod.html">[...]</a>
+          <div class="features">inherited</div>
+</dd>
+        <dt id="toString" class="callable inherited">
+          <span class="name"><a href="firestore_helpers/Area/toString.html">toString</a></span><span class="signature">(<wbr>)
+            <span class="returntype parameter">&#8594; String</span>
+          </span>
+        </dt>
+        <dd class="inherited">
+          Returns a string representation of this object.
+          <div class="features">inherited</div>
+</dd>
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor inherited" id="operators">
+      <h2>Operators</h2>
+      <dl class="callables">
+        <dt id="operator ==" class="callable inherited">
+          <span class="name"><a href="firestore_helpers/Area/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation">dynamic</span> <span class="parameter-name">other</span></span>)
+            <span class="returntype parameter">&#8594; bool</span>
+          </span>
+        </dt>
+        <dd class="inherited">
+          The equality operator. <a href="firestore_helpers/Area/operator_equals.html">[...]</a>
+          <div class="features">inherited</div>
+</dd>
+      </dl>
+    </section>
+
+
+
+
+  </div> <!-- /.main-content -->
+
+  <div class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
+    <ol>
+      <li class="section-title"><a href="firestore_helpers/Area-class.html#constructors">Constructors</a></li>
+      <li><a href="firestore_helpers/Area/Area.html">Area</a></li>
+    
+      <li class="section-title">
+        <a href="firestore_helpers/Area-class.html#instance-properties">Properties</a>
+      </li>
+      <li><a href="firestore_helpers/Area/center.html">center</a></li>
+      <li><a href="firestore_helpers/Area/radius.html">radius</a></li>
+      <li class="inherited"><a href="firestore_helpers/Area/hashCode.html">hashCode</a></li>
+      <li class="inherited"><a href="firestore_helpers/Area/runtimeType.html">runtimeType</a></li>
+    
+      <li class="section-title inherited"><a href="firestore_helpers/Area-class.html#instance-methods">Methods</a></li>
+      <li class="inherited"><a href="firestore_helpers/Area/noSuchMethod.html">noSuchMethod</a></li>
+      <li class="inherited"><a href="firestore_helpers/Area/toString.html">toString</a></li>
+    
+      <li class="section-title inherited"><a href="firestore_helpers/Area-class.html#operators">Operators</a></li>
+      <li class="inherited"><a href="firestore_helpers/Area/operator_equals.html">operator ==</a></li>
+    
+    
+    
+    </ol>
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    firestore_helpers 1.0.0
+  </span>
+
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="static-assets/typeahead.bundle.min.js"></script>
+<script src="static-assets/highlight.pack.js"></script>
+<script src="static-assets/URI.js"></script>
+<script src="static-assets/script.js"></script>
+
+
+</body>
+
+</html>

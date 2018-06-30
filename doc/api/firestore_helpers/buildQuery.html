@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="API docs for the buildQuery function from the firestore_helpers library, for the Dart programming language.">
+  <title>buildQuery function - firestore_helpers library - Dart API</title>
+  <!-- required because all the links are pseudo-absolute -->
+  <base href="..">
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500,400i,400,300|Source+Sans+Pro:400,300,700" rel="stylesheet">
+  <link rel="stylesheet" href="static-assets/github.css">
+  <link rel="stylesheet" href="static-assets/styles.css">
+  <link rel="icon" href="static-assets/favicon.png">
+
+</head>
+
+<body>
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="index.html">firestore_helpers</a></li>
+    <li><a href="firestore_helpers/firestore_helpers-library.html">firestore_helpers</a></li>
+    <li class="self-crumb">buildQuery function</li>
+  </ol>
+  <div class="self-name">buildQuery</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
+    <h5>firestore_helpers library</h5>
+    <ol>
+      <li class="section-title"><a href="firestore_helpers/firestore_helpers-library.html#classes">Classes</a></li>
+      <li><a href="firestore_helpers/Area-class.html">Area</a></li>
+      <li><a href="firestore_helpers/GeoBoundingBox-class.html">GeoBoundingBox</a></li>
+      <li><a href="firestore_helpers/OrderConstraint-class.html">OrderConstraint</a></li>
+      <li><a href="firestore_helpers/QueryConstraint-class.html">QueryConstraint</a></li>
+    
+    
+    
+      <li class="section-title"><a href="firestore_helpers/firestore_helpers-library.html#functions">Functions</a></li>
+      <li><a href="firestore_helpers/boundingBoxCoordinates.html">boundingBoxCoordinates</a></li>
+      <li><a href="firestore_helpers/buildQuery.html">buildQuery</a></li>
+      <li><a href="firestore_helpers/degreesToRadians.html">degreesToRadians</a></li>
+      <li><a href="firestore_helpers/distance.html">distance</a></li>
+      <li><a href="firestore_helpers/getData.html">getData</a></li>
+      <li><a href="firestore_helpers/getLocationsConstraint.html">getLocationsConstraint</a></li>
+      <li><a href="firestore_helpers/metersToLongitudeDegrees.html">metersToLongitudeDegrees</a></li>
+      <li><a href="firestore_helpers/wrapLongitude.html">wrapLongitude</a></li>
+    
+    
+      <li class="section-title"><a href="firestore_helpers/firestore_helpers-library.html#typedefs">Typedefs</a></li>
+      <li><a href="firestore_helpers/DocumentMapper.html">DocumentMapper</a></li>
+    
+    </ol>
+  </div><!--/.sidebar-offcanvas-left-->
+
+  <div class="col-xs-12 col-sm-9 col-md-8 main-content">
+    <h1>buildQuery function</h1>
+
+    <section class="multi-line-signature">
+        <span class="returntype">Query</span>
+        <span class="name ">buildQuery</span>
+(<wbr>{<span class="parameter" id="buildQuery-param-collection"><span class="type-annotation">CollectionReference</span> <span class="parameter-name">collection</span>, </span> <span class="parameter" id="buildQuery-param-constraints"><span class="type-annotation">List<span class="signature">&lt;<wbr><span class="type-parameter"><a href="firestore_helpers/QueryConstraint-class.html">QueryConstraint</a></span>&gt;</span></span> <span class="parameter-name">constraints</span>, </span> <span class="parameter" id="buildQuery-param-orderBy"><span class="type-annotation">List<span class="signature">&lt;<wbr><span class="type-parameter"><a href="firestore_helpers/OrderConstraint-class.html">OrderConstraint</a></span>&gt;</span></span> <span class="parameter-name">orderBy</span></span> })
+    </section>
+    <section class="desc markdown">
+      <p>Builds a query dynamically based on a list of <a href="firestore_helpers/QueryConstraint-class.html">QueryConstraint</a> and orders the result based on a list of <a href="firestore_helpers/OrderConstraint-class.html">OrderConstraint</a>.
+<code>collection</code> : the source collection for the new query
+<code>constraints</code> : a list of constraints that should be applied to the <code>collection</code>. 
+<code>orderBy</code> : a list of order constraints that should be applied to the <code>collection</code> after the filtering by <code>constraints</code> was done.
+Important all limitation of FireStore apply for this method two on how you can query fields in collections and order them.</p>
+    </section>
+    
+    <section class="summary source-code" id="source">
+      <h2><span>Implementation</span> </h2>
+      <pre class="language-dart"><code class="language-dart">Query buildQuery({CollectionReference collection, List&lt;QueryConstraint&gt; constraints,
+    List&lt;OrderConstraint&gt; orderBy}) {
+  Query ref = collection;
+
+  if (constraints != null) {
+    for (var constraint in constraints) {
+      ref = ref.where(constraint.field,
+          isEqualTo: constraint.isEqualTo,
+          isGreaterThan: constraint.isGreaterThan,
+          isGreaterThanOrEqualTo: constraint.isGreaterThanOrEqualTo,
+          isLessThan: constraint.isLessThan,
+          isLessThanOrEqualTo: constraint.isLessThanOrEqualTo,
+          isNull: constraint.isNull);
+    }
+  }
+  if (orderBy != null) {
+    for (var order in orderBy) {
+      ref = ref.orderBy(order.field, descending: order.descending);
+    }
+  }
+  return ref;
+}</code></pre>
+    </section>
+
+  </div> <!-- /.main-content -->
+
+  <div class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    firestore_helpers 1.0.0
+  </span>
+
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="static-assets/typeahead.bundle.min.js"></script>
+<script src="static-assets/highlight.pack.js"></script>
+<script src="static-assets/URI.js"></script>
+<script src="static-assets/script.js"></script>
+
+
+</body>
+
+</html>
