@@ -1,0 +1,6 @@
+is_package: true
+package_name: firestore_helpers
+maintainer_name: Thomas Burkhart
+maintainer_username: escamoteur
+package_description: Helper functions to create queries dynamically including Loction based queries
+pub_package_name: firestore_helpers
