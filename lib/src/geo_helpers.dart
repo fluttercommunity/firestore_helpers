@@ -5,7 +5,6 @@ import 'dart:math' as math;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firestore_helpers/firestore_helpers.dart';
 
-
 ///
 /// Wraps the longitude to [-180,180].
 ///
@@ -59,11 +58,11 @@ class GeoBoundingBox {
   GeoBoundingBox({this.swCorner, this.neCorner});
 }
 
-/// 
+///
 /// Defines the search area by a  circle [center] / [radius]
 /// Based on the limitations of FireStore we can only search in rectangles
 /// which means that from this definition a final search square is calculated
-/// that contains the circle 
+/// that contains the circle
 class Area {
   final GeoPoint center;
   final double radius;

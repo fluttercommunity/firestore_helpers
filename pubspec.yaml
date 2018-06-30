@@ -1,5 +1,5 @@
 name: firestore_helpers
-description: A new flutter package project.
+description: Firestore helper function to create dynamic and location based queries
 version: 1.0.0+1
 maintainer: Thomas Burkhart (@escamoteur)
 authors: 
