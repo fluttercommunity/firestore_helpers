@@ -4,6 +4,8 @@
 
 FireStore is a great database that is easy to work with. To make live even easier here is this package. It contains functions build queries dynamically and for location based queries.
 
+The necessary math for the geographical calculations were ported from [this JS source on SO](https://stackoverflow.com/questions/46630507/how-to-run-a-geo-nearby-query-with-firestore) by [Stanton Parham](https://github.com/stparham)
+
 ## Creating Queries dynamically
 
 In case you want to modify your queries at runtime `builtQuery()` might be helpful:

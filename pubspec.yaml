@@ -1,6 +1,6 @@
 name: firestore_helpers
 description: A new flutter package project.
-version: 1.0.0
+version: 1.0.0+1
 maintainer: Thomas Burkhart (@escamoteur)
 authors: 
 - Flutter Community <flutter-community@googlegroups.com>
@@ -11,11 +11,11 @@ environment:
   sdk: '>=2.0.0-dev <3.0.0'
 
 dependencies:
+  cloud_firestore: "^0.7.3"
   flutter:
     sdk: flutter
 
 dev_dependencies:
-  cloud_firestore: "^0.7.3"
   flutter_test:
     sdk: flutter
 
