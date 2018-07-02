@@ -80,7 +80,7 @@ typedef ItemComparer<T> = int Function(T item1, T item2);
 Stream<List<T>> getDataFromQuery<T>({
   Query query,
   DocumentMapper<T> mapper,
-  List<ItemFilter> clientSitefilters,
+  List<ItemFilter<T>> clientSitefilters,
   ItemComparer<T> orderComparer,
 }) {
   return query.snapshots().map((snapShot) {
