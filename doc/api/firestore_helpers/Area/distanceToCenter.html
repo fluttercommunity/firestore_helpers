@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="API docs for the center property from the Area class, for the Dart programming language.">
-  <title>center property - Area class - firestore_helpers library - Dart API</title>
+  <meta name="description" content="API docs for the distanceToCenter method from the Area class, for the Dart programming language.">
+  <title>distanceToCenter method - Area class - firestore_helpers library - Dart API</title>
   <!-- required because all the links are pseudo-absolute -->
   <base href="../..">
 
@@ -26,9 +26,9 @@
     <li><a href="index.html">firestore_helpers</a></li>
     <li><a href="firestore_helpers/firestore_helpers-library.html">firestore_helpers</a></li>
     <li><a href="firestore_helpers/Area-class.html">Area</a></li>
-    <li class="self-crumb">center property</li>
+    <li class="self-crumb">distanceToCenter method</li>
   </ol>
-  <div class="self-name">center</div>
+  <div class="self-name">distanceToCenter</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -66,19 +66,20 @@
   </div><!--/.sidebar-offcanvas-->
 
   <div class="col-xs-12 col-sm-9 col-md-8 main-content">
-    <h1>center property</h1>
+    <h1>distanceToCenter method</h1>
 
-        <section class="multi-line-signature">
-          <span class="returntype">GeoPoint</span>
-          <span class="name ">center</span>
-          <div class="features">final</div>
-        </section>
-                <section class="summary source-code" id="source">
-          <h2><span>Implementation</span> </h2>
-          <pre class="language-dart"><code class="language-dart">final GeoPoint center
-
-</code></pre>
-        </section>
+    <section class="multi-line-signature">
+      <span class="returntype">double</span>
+      <span class="name ">distanceToCenter</span>
+(<wbr><span class="parameter" id="distanceToCenter-param-point"><span class="type-annotation">GeoPoint</span> <span class="parameter-name">point</span></span>)
+    </section>
+    
+    <section class="summary source-code" id="source">
+      <h2><span>Implementation</span> </h2>
+      <pre class="language-dart"><code class="language-dart">double distanceToCenter(GeoPoint point) {
+  return distanceInKilometers(center, point);
+}</code></pre>
+    </section>
 
   </div> <!-- /.main-content -->
 

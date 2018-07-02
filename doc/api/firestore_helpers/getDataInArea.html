@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="API docs for the getDataInArea function from the firestore_helpers library, for the Dart programming language.">
+  <title>getDataInArea function - firestore_helpers library - Dart API</title>
+  <!-- required because all the links are pseudo-absolute -->
+  <base href="..">
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500,400i,400,300|Source+Sans+Pro:400,300,700" rel="stylesheet">
+  <link rel="stylesheet" href="static-assets/github.css">
+  <link rel="stylesheet" href="static-assets/styles.css">
+  <link rel="icon" href="static-assets/favicon.png">
+
+</head>
+
+<body>
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="index.html">firestore_helpers</a></li>
+    <li><a href="firestore_helpers/firestore_helpers-library.html">firestore_helpers</a></li>
+    <li class="self-crumb">getDataInArea&lt;<wbr><span class="type-parameter">T</span>&gt; function</li>
+  </ol>
+  <div class="self-name">getDataInArea</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
+    <h5>firestore_helpers library</h5>
+    <ol>
+      <li class="section-title"><a href="firestore_helpers/firestore_helpers-library.html#classes">Classes</a></li>
+      <li><a href="firestore_helpers/Area-class.html">Area</a></li>
+      <li><a href="firestore_helpers/GeoBoundingBox-class.html">GeoBoundingBox</a></li>
+      <li><a href="firestore_helpers/OrderConstraint-class.html">OrderConstraint</a></li>
+      <li><a href="firestore_helpers/QueryConstraint-class.html">QueryConstraint</a></li>
+    
+    
+    
+      <li class="section-title"><a href="firestore_helpers/firestore_helpers-library.html#functions">Functions</a></li>
+      <li><a href="firestore_helpers/boundingBoxCoordinates.html">boundingBoxCoordinates</a></li>
+      <li><a href="firestore_helpers/buildQuery.html">buildQuery</a></li>
+      <li><a href="firestore_helpers/coordinatesValid.html">coordinatesValid</a></li>
+      <li><a href="firestore_helpers/degreesToRadians.html">degreesToRadians</a></li>
+      <li><a href="firestore_helpers/distanceInKilometers.html">distanceInKilometers</a></li>
+      <li><a href="firestore_helpers/geoPointValid.html">geoPointValid</a></li>
+      <li><a href="firestore_helpers/getDataFromQuery.html">getDataFromQuery</a></li>
+      <li><a href="firestore_helpers/getDataInArea.html">getDataInArea</a></li>
+      <li><a href="firestore_helpers/getLocationsConstraint.html">getLocationsConstraint</a></li>
+      <li><a href="firestore_helpers/kilometersToLongitudeDegrees.html">kilometersToLongitudeDegrees</a></li>
+      <li><a href="firestore_helpers/wrapLongitude.html">wrapLongitude</a></li>
+    
+    
+      <li class="section-title"><a href="firestore_helpers/firestore_helpers-library.html#typedefs">Typedefs</a></li>
+      <li><a href="firestore_helpers/DistanceAccessor.html">DistanceAccessor</a></li>
+      <li><a href="firestore_helpers/DistanceMapper.html">DistanceMapper</a></li>
+      <li><a href="firestore_helpers/DocumentMapper.html">DocumentMapper</a></li>
+      <li><a href="firestore_helpers/ItemComparer.html">ItemComparer</a></li>
+      <li><a href="firestore_helpers/ItemFilter.html">ItemFilter</a></li>
+      <li><a href="firestore_helpers/LocationAccessor.html">LocationAccessor</a></li>
+    
+    </ol>
+  </div><!--/.sidebar-offcanvas-left-->
+
+  <div class="col-xs-12 col-sm-9 col-md-8 main-content">
+    <h1>getDataInArea&lt;<wbr><span class="type-parameter">T</span>&gt; function</h1>
+
+    <section class="multi-line-signature">
+        <span class="returntype">Stream<span class="signature">&lt;<wbr><span class="type-parameter">List<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>&gt;</span></span>
+        <span class="name ">getDataInArea</span>
+&lt;<wbr><span class="type-parameter">T</span>&gt;(<wbr>{<span class="parameter" id="getDataInArea-param-area"><span>@required</span> <span class="type-annotation"><a href="firestore_helpers/Area-class.html">Area</a></span> <span class="parameter-name">area</span>, </span> <span class="parameter" id="getDataInArea-param-collection"><span>@required</span> <span class="type-annotation">CollectionReference</span> <span class="parameter-name">collection</span>, </span> <span class="parameter" id="getDataInArea-param-mapper"><span>@required</span> <span class="type-annotation"><a href="firestore_helpers/DocumentMapper.html">DocumentMapper</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">mapper</span>, </span> <span class="parameter" id="getDataInArea-param-locationFieldNameInDB"><span>@required</span> <span class="type-annotation">String</span> <span class="parameter-name">locationFieldNameInDB</span>, </span> <span class="parameter" id="getDataInArea-param-locationAccessor"><span class="type-annotation"><a href="firestore_helpers/LocationAccessor.html">LocationAccessor</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">locationAccessor</span>, </span> <span class="parameter" id="getDataInArea-param-clientSitefilters"><span class="type-annotation">List<span class="signature">&lt;<wbr><span class="type-parameter"><a href="firestore_helpers/ItemFilter.html">ItemFilter</a></span>&gt;</span></span> <span class="parameter-name">clientSitefilters</span>, </span> <span class="parameter" id="getDataInArea-param-distanceMapper"><span class="type-annotation"><a href="firestore_helpers/DistanceMapper.html">DistanceMapper</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">distanceMapper</span>, </span> <span class="parameter" id="getDataInArea-param-distanceAccessor"><span class="type-annotation"><a href="firestore_helpers/DistanceAccessor.html">DistanceAccessor</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">distanceAccessor</span>, </span> <span class="parameter" id="getDataInArea-param-sortDecending"><span class="type-annotation">bool</span> <span class="parameter-name">sortDecending</span>: <span class="default-value">false</span></span> })
+    </section>
+    <section class="desc markdown">
+      <p>Provides as Stream of lists of data items of type <code>T</code> that have a location field in a 
+specified area sorted by the distance of to the areas center.
+<code>area</code>  : The area that constraints the query
+<code>collection</code> : The source FireStore document collection
+<code>mapper</code> : mapping function that gets applied to every document in the query. 
+Typically used to deserialize the Map returned from FireStore
+<code>locationFieldInDb</code> : The name of the data field in your FireStore document. 
+Need to make the location based search on the server side
+<code>locationAccessor</code> : As this is a generic function it cannot know where your 
+location is stored in you generic type.
+optional if you don't use <code>distanceMapper</code> and don't want to sort by distance
+Therefore pass a function that returns a valur from the location field inside 
+your generic type.
+<code>distanceMapper</code> : optional mapper that gets the distance to the center of the 
+area passed to give you the chance to save this inside your item
+if you use a <code>distanceMapper</code> you HAVE to pass <code>locationAccessor</code>
+<code>clientSideFilters</code> : optional list of filter functions that execute a <code>.where()</code> 
+on the result on the client side
+<code>distanceAccessor</code> : if you have stored the distance using a <code>distanceMapper</code> passing 
+this accessor function will prevent additional distance computing for sorting.
+<code>sortDecending</code> : if the resulting list should be sorted descending by the distance 
+to the area's center. If you don't provide <code>loacationAccessor</code> or <code>distanceAccessor</code> 
+no sorting is done</p>
+    </section>
+    
+    <section class="summary source-code" id="source">
+      <h2><span>Implementation</span> </h2>
+      <pre class="language-dart"><code class="language-dart">Stream&lt;List&lt;T&gt;&gt; getDataInArea&lt;T&gt;(
+    {@required Area area,
+    @required CollectionReference collection,
+    @required DocumentMapper&lt;T&gt; mapper,
+    @required String locationFieldNameInDB,
+    LocationAccessor&lt;T&gt; locationAccessor,
+    List&lt;ItemFilter&gt; clientSitefilters,
+    DistanceMapper&lt;T&gt; distanceMapper,
+    DistanceAccessor&lt;T&gt; distanceAccessor,
+    bool sortDecending = false}) {
+  assert((distanceAccessor == null) || (distanceMapper != null &amp;&amp; distanceAccessor != null),);
+
+  var query = buildQuery(
+      collection: collection, constraints: getLocationsConstraint(locationFieldNameInDB, area));
+  return getDataFromQuery&lt;T&gt;(
+      query: query,
+      mapper: (docSnapshot) {
+        if (distanceMapper != null) {
+          var item = mapper(docSnapshot);
+          return distanceMapper(item, area.distanceToCenter(locationAccessor(item)));
+        } else {
+          return mapper(docSnapshot);
+        }
+      },
+      clientSitefilters: clientSitefilters,
+      orderComparer:
+          distanceAccessor != null &#47;&#47; i this case we don&#39;t have to calculate the distance again
+              ? (item1, item2) =&gt; sortDecending
+                  ? distanceAccessor(item1).compareTo(distanceAccessor(item2))
+                  : distanceAccessor(item2).compareTo(distanceAccessor(item1))
+              : locationAccessor != null
+                  ? (item1, item2) =&gt; sortDecending
+                      ? area
+                          .distanceToCenter(locationAccessor(item1))
+                          .compareTo(area.distanceToCenter(locationAccessor(item2)))
+                      : area
+                          .distanceToCenter(locationAccessor(item2))
+                          .compareTo(area.distanceToCenter(locationAccessor(item1)))
+                  : null);
+}</code></pre>
+    </section>
+
+  </div> <!-- /.main-content -->
+
+  <div class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    firestore_helpers 1.0.1
+  </span>
+
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="static-assets/typeahead.bundle.min.js"></script>
+<script src="static-assets/highlight.pack.js"></script>
+<script src="static-assets/URI.js"></script>
+<script src="static-assets/script.js"></script>
+
+
+</body>
+
+</html>

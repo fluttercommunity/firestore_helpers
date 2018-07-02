@@ -64,11 +64,36 @@ Query buildQuery(
 }
 
 typedef DocumentMapper<T> = T Function(DocumentSnapshot document);
+typedef ItemFilter<T> = bool Function(T);
+typedef ItemComparer<T> = int Function(T item1, T item2);
 
 ///
-/// Convenience Method to access the data of a Query as a stream while applying a mapping function on each document
+/// Convenience Method to access the data of a Query as a stream while applying 
+/// a mapping function on each document with optional client side filtering and sorting
 /// [qery] : the data source
-/// [mapper] : mapping function that gets applied to every document in the query.
-Stream<List<T>> getData<T>(Query query, DocumentMapper<T> mapper) {
-  return query.snapshots().map((snapShot) => snapShot.documents.map(mapper).toList());
+/// [mapper] : mapping function that gets applied to every document in the query. 
+/// Typically used to deserialize the Map returned from FireStore
+/// [clientSideFilters] : optional list of filter functions that execute a `.where()` 
+/// on the result on the client side
+/// [orderComparer] : optional comparisson function. If provided your resulting data 
+/// will be sorted based on it on the client
+Stream<List<T>> getDataFromQuery<T>({
+  Query query,
+  DocumentMapper<T> mapper,
+  List<ItemFilter> clientSitefilters,
+  ItemComparer<T> orderComparer,
+}) {
+  return query.snapshots().map((snapShot) {
+    Iterable<T> items = snapShot.documents.map(mapper);
+    if (clientSitefilters != null) {
+      for (var filter in clientSitefilters) {
+        items = items.where(filter);
+      }
+    }
+    var asList = items.toList();
+    if (orderComparer != null) {
+      asList.sort(orderComparer);
+    }
+    return asList;
+  });
 }

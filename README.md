@@ -48,19 +48,26 @@ Lets assume we have an events collection in FireStore and we want to get all eve
 
 
 ```Dart
+
+// Let's assume that our Event class looks like this 
+
+class Event{
+  String id;
+  String name;
+  DateTime startTime;
+  GeoPoint location;
+}
+
+
 Stream<List<Event>> getEvents({List<QueryConstraint> constraints}) {
   try {
     Query ref = buildQuery(
       collection: eventCollection, 
       constraints: constraints, orderBy: [
-          new OrderConstraint("location", true),
           new OrderConstraint("startTime", false),
         ]);
     return ref.snapshots().map((snapShot) => snapShot.documents.map(ventDoc) {
           var event = _eventSerializer.fromMap(eventDoc.data);
-          // if you serializer does not pass types like GeoPoint through
-          // you have to add that fields manually
-          event.location = eventDoc.data['location'] as GeoPoint; 
           event.id = eventDoc.documentID;
           return event;
         }).toList());
@@ -77,41 +84,51 @@ Stream<List<Event>> getEvents({List<QueryConstraint> constraints}) {
 ```
 
 
-To make this even more comfortable there is `getData()`
+To make this even more comfortable and powerful there is `getDataFromQuery()`
 
 ```Dart
-typedef DocumentMapper<T> = T Function(DocumentSnapshot document); 
+typedef DocumentMapper<T> = T Function(DocumentSnapshot document);
+typedef ItemFilter<T> = bool Function(T);
+typedef ItemComparer<T> = int Function(T item1, T item2);
 
 ///
-/// Convenience Method to access the data of a Query as a stream while 
-/// applying a mapping function on each document
+/// Convenience Method to access the data of a Query as a stream while applying 
+/// a mapping function on each document with optional client side filtering and sorting
 /// [qery] : the data source
-/// [mapper] : mapping function that gets applied to every document in the query.
-Stream<List<T>> getData<T>(Query query, DocumentMapper<T> mapper)
-{
-      return query.snapshots().map((snapShot) => snapShot.documents.map(mapper)
-          .toList());
+/// [mapper] : mapping function that gets applied to every document in the query. 
+/// Typically used to deserialize the Map returned from FireStore
+/// [clientSideFilters] : optional list of filter functions that execute a `.where()` 
+/// on the result on the client side
+/// [orderComparer] : optional comparisson function. If provided your resulting data 
+/// will be sorted based on it on the client
 
-}
+Stream<List<T>> getDataFromQuery<T>({
+  Query query,
+  DocumentMapper<T> mapper,
+  List<ItemFilter> clientSitefilters,
+  ItemComparer<T> orderComparer,
+});
 ```
 
-With this our example get this:
+With this our example get this with some additional functionality:
+
+We want the events to be ordered by name and only future events. 
+In this example we don't do the sorting on the sever but on client side after the filtering
 
 ```Dart
 Stream<List<Event>> getEvents({List<QueryConstraint> constraints}) {
   try {
-    Query query = buildQuery(collection: eventCollection, constraints: constraints,       
-      new OrderConstraint("location", true),
-      new OrderConstraint("startTime", false),
-    ]);
-    return getData(query, (eventDoc) {
+    Query query = buildQuery(collection: eventCollection, constraints: constraints);
+    return getDataFromQuery(
+        query: query, 
+        mapper: (eventDoc) {
           var event = _eventSerializer.fromMap(eventDoc.data);
-          // if you serializer does not pass types like GeoPoint through
-          // you have to add that fields manually
-          event.location = eventDoc.data['location'] as GeoPoint;
           event.id = eventDoc.documentID;
           return event;
-        });
+        }, 
+        clientSitefilters: (event) => event.startTime > DateTime.now()  // only future events
+        orderComparer: (event1, event2) => event1.name.compareTo(event2.name) 
+      );
   } on Exception catch (ex) {
     print(ex);
   }
@@ -123,7 +140,7 @@ Stream<List<Event>> getEvents({List<QueryConstraint> constraints}) {
 A quite common scenario in an mobile App is to query for data that's location entry matches a certain search area.
 Unfortunately FireStore doesn't support real geographical queries, but we can query _less than_ and _greater than_ on `GeopPoints`. Which allows to span a search square defined by its south-west and north-east corners.
 
-As most App require to define a search area by a center point  and a radius we have `calculateBoundingBoxCoordinates`
+As most App require to define a search area by a centre point  and a radius we have `calculateBoundingBoxCoordinates`
 
 ```Dart
 /// Defines the boundingbox for the query based
@@ -135,11 +152,30 @@ class GeoBoundingBox {
   GeoBoundingBox({this.swCorner, this.neCorner});
 }
 
+///
+/// Defines the search area by a  circle [center] / [radiusInKilometers]
+/// Based on the limitations of FireStore we can only search in rectangles
+/// which means that from this definition a final search square is calculated
+/// that contains the circle
 class Area {
   final GeoPoint center;
-  final double radius;
+  final double radiusInKilometers;
 
-  Area(this.center, this.radius);
+  Area(this.center, this.radiusInKilometers): 
+  assert(geoPointValid(center)), assert(radiusInKilometers >= 0);
+
+  factory Area.inMeters(GeoPoint gp, int radiusInMeters) {
+    return new Area(gp, radiusInMeters / 1000.0);
+  }
+
+  factory Area.inMiles(GeoPoint gp, int radiusMiles) {
+    return new Area(gp, radiusMiles * 1.60934);
+  }
+
+  /// returns the distance in km of [point] to center
+  double distanceToCenter(GeoPoint point) {
+    return distanceInKilometers(center, point);
+  }
 }
 
 ///
@@ -158,6 +194,104 @@ If you use `buildQuery()` is even gets easier with `getLocationsConstraint`
 /// [area] : Area within that the returned items should be
 List<QueryConstraint> getLocationsConstraint(String fieldName, Area area) 
 ```
+
+
+```Dart
+/// function type used to acces the field that contains the loaction inside 
+/// the generic type
+typedef LocationAccessor<T> = GeoPoint Function(T item);
+
+/// function typse used to access the distance field that contains the 
+/// distance to the target inside the generic type
+typedef DistanceAccessor<T> = double Function(T item);
+
+typedef DistanceMapper<T> = T Function(T item, double itemsDistance);
+
+`getDataInArea()` combines all the above functions to one extremely powerful function:
+
+///
+/// Provides as Stream of lists of data items of type [T] that have a location field in a 
+/// specified area sorted by the distance of to the areas center.
+/// [area]  : The area that constraints the query
+/// [collection] : The source FireStore document collection
+/// [mapper] : mapping function that gets applied to every document in the query. 
+/// Typically used to deserialize the Map returned from FireStore
+/// [locationFieldInDb] : The name of the data field in your FireStore document. 
+/// Need to make the location based search on the server side
+/// [locationAccessor] : As this is a generic function it cannot know where your 
+/// location is stored in you generic type.
+/// optional if you don't use [distanceMapper] and don't want to sort by distance
+/// Therefore pass a function that returns a valur from the location field inside 
+/// your generic type.
+/// [distanceMapper] : optional mapper that gets the distance to the center of the 
+/// area passed to give you the chance to save this inside your item
+/// if you use a [distanceMapper] you HAVE to pass [locationAccessor]
+/// [clientSideFilters] : optional list of filter functions that execute a `.where()` 
+/// on the result on the client side
+/// [distanceAccessor] : if you have stored the distance using a [distanceMapper] passing 
+/// this accessor function will prevent additional distance computing for sorting.
+/// [sortDecending] : if the resulting list should be sorted descending by the distance 
+/// to the area's center. If you don't provide [loacationAccessor] or [distanceAccessor] 
+/// no sorting is done
+Stream<List<T>> getDataInArea<T>(
+    {@required Area area,
+    @required CollectionReference collection,
+    @required DocumentMapper<T> mapper,
+    @required String locationFieldNameInDB,
+    LocationAccessor<T> locationAccessor,
+    List<ItemFilter> clientSitefilters,
+    DistanceMapper<T> distanceMapper,
+    DistanceAccessor<T> distanceAccessor,
+    bool sortDecending = false}) {
+  assert((distanceAccessor == null) || (distanceMapper != null && distanceAccessor != null),);
+```
+
+Best to see an example how we would use it:
+
+
+```Dart
+// We will define a wrapper class because we want our Event plut its distance back
+
+class EventData{
+  Event event;
+  double distance;
+
+  EventData(this.event, [this.distance]) 
+}
+
+
+
+Stream<List<EventData>> getEvents(area) {
+  try {
+    return getDataInArea(
+        area: area,
+        locationFieldNameInDB: 'loction',        
+        mapper: (eventDoc) {
+          var event = _eventSerializer.fromMap(eventDoc.data);
+          // if you serializer does not pass types like GeoPoint through
+          // you have to add that fields manually
+          event.location = eventDoc.data['location'] as GeoPoint;
+          event.id = eventDoc.documentID;
+          return new EventData(event);
+        },
+        locationAccessor: (eventData) => eventData.event.location,
+        distanceMapper: (eventData, distance) {
+          eventData.distance = distance;
+          return eventData;
+        },
+        distanceAccessor: (eventData) => eventDatas.distance, 
+        clientSitefilters: (event) => event.startTime > DateTime.now()  // filer only future events
+      );
+  } on Exception catch (ex) {
+    print(ex);
+  }
+  return null;
+}
+```
+
+
+
+
 
 **IMPORTANT** to enable FireStore to execute queries based on `GeopPoints` you can not serialize the GeoPoints before you hand them to FireStore's `setData` if you use a code generator that does not allow to mark certain field as passthrough you have to set the value manually like here. 
 

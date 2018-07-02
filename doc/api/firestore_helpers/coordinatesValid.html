@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="API docs for the getLocationsConstraint function from the firestore_helpers library, for the Dart programming language.">
-  <title>getLocationsConstraint function - firestore_helpers library - Dart API</title>
+  <meta name="description" content="API docs for the coordinatesValid function from the firestore_helpers library, for the Dart programming language.">
+  <title>coordinatesValid function - firestore_helpers library - Dart API</title>
   <!-- required because all the links are pseudo-absolute -->
   <base href="..">
 
@@ -25,9 +25,9 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="index.html">firestore_helpers</a></li>
     <li><a href="firestore_helpers/firestore_helpers-library.html">firestore_helpers</a></li>
-    <li class="self-crumb">getLocationsConstraint function</li>
+    <li class="self-crumb">coordinatesValid function</li>
   </ol>
-  <div class="self-name">getLocationsConstraint</div>
+  <div class="self-name">coordinatesValid</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -72,45 +72,24 @@
   </div><!--/.sidebar-offcanvas-left-->
 
   <div class="col-xs-12 col-sm-9 col-md-8 main-content">
-    <h1>getLocationsConstraint function</h1>
+    <h1>coordinatesValid function</h1>
 
     <section class="multi-line-signature">
-        <span class="returntype">List<span class="signature">&lt;<wbr><span class="type-parameter"><a href="firestore_helpers/QueryConstraint-class.html">QueryConstraint</a></span>&gt;</span></span>
-        <span class="name ">getLocationsConstraint</span>
-(<wbr><span class="parameter" id="getLocationsConstraint-param-fieldName"><span class="type-annotation">String</span> <span class="parameter-name">fieldName</span>, </span> <span class="parameter" id="getLocationsConstraint-param-area"><span class="type-annotation"><a href="firestore_helpers/Area-class.html">Area</a></span> <span class="parameter-name">area</span></span>)
+        <span class="returntype">bool</span>
+        <span class="name ">coordinatesValid</span>
+(<wbr><span class="parameter" id="coordinatesValid-param-latitude"><span class="type-annotation">double</span> <span class="parameter-name">latitude</span>, </span> <span class="parameter" id="coordinatesValid-param-longitude"><span class="type-annotation">double</span> <span class="parameter-name">longitude</span></span>)
     </section>
     <section class="desc markdown">
-      <p>Creates the necessary constraints to query for items in a FireStore collection that are inside a specific range from a center point
-<code>fieldName</code> : the name of the field in FireStore where the location of the items is stored
-<code>area</code> : Area within that the returned items should be</p>
+      <p>Checks if these coordinates are valid geo coordinates.
+<code>latitude</code>  The latitude must be in the range <code>-90, 90</code>
+<code>longitude</code> The longitude must be in the range <code>-180, 180</code>
+returns <code>true</code> if these are valid geo coordinates</p>
     </section>
     
     <section class="summary source-code" id="source">
       <h2><span>Implementation</span> </h2>
-      <pre class="language-dart"><code class="language-dart">List&lt;QueryConstraint&gt; getLocationsConstraint(String fieldName, Area area) {
-  &#47;&#47; calculate the SW and NE corners of the bounding box to query for
-  final box = boundingBoxCoordinates(area);
-
-  &#47;&#47; construct the GeoPoints
-  final lesserGeopoint = box.swCorner;
-  final greaterGeopoint = box.neCorner;
-
-  &#47;&#47; print( &quot;LOC: ${area.center.latitude}&#47;${area.center.longitude}&quot;);
-  &#47;&#47; print( &quot;SW: ${box.swCorner.latitude}&#47;${box.swCorner.longitude}&quot;);
-  &#47;&#47; print( &quot;NE: ${box.neCorner.latitude}&#47;${box.neCorner.longitude}&quot;);
-
-  List&lt;QueryConstraint&gt; query = &lt;QueryConstraint&gt;[
-    new QueryConstraint(
-      field: fieldName,
-      isLessThan: greaterGeopoint,
-    ),
-    new QueryConstraint(
-      field: fieldName,
-      isGreaterThan: lesserGeopoint,
-    )
-  ];
-
-  return query;
+      <pre class="language-dart"><code class="language-dart">bool coordinatesValid(double latitude, double longitude) {
+  return (latitude &gt;= -90 &amp;&amp; latitude &lt;= 90 &amp;&amp; longitude &gt;= -180 &amp;&amp; longitude &lt;= 180);
 }</code></pre>
     </section>
 

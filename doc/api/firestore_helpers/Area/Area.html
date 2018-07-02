@@ -41,16 +41,19 @@
     <ol>
       <li class="section-title"><a href="firestore_helpers/Area-class.html#constructors">Constructors</a></li>
       <li><a href="firestore_helpers/Area/Area.html">Area</a></li>
+      <li><a href="firestore_helpers/Area/Area.inMeters.html">inMeters</a></li>
+      <li><a href="firestore_helpers/Area/Area.inMiles.html">inMiles</a></li>
     
       <li class="section-title">
         <a href="firestore_helpers/Area-class.html#instance-properties">Properties</a>
       </li>
       <li><a href="firestore_helpers/Area/center.html">center</a></li>
-      <li><a href="firestore_helpers/Area/radius.html">radius</a></li>
+      <li><a href="firestore_helpers/Area/radiusInKilometers.html">radiusInKilometers</a></li>
       <li class="inherited"><a href="firestore_helpers/Area/hashCode.html">hashCode</a></li>
       <li class="inherited"><a href="firestore_helpers/Area/runtimeType.html">runtimeType</a></li>
     
-      <li class="section-title inherited"><a href="firestore_helpers/Area-class.html#instance-methods">Methods</a></li>
+      <li class="section-title"><a href="firestore_helpers/Area-class.html#instance-methods">Methods</a></li>
+      <li><a href="firestore_helpers/Area/distanceToCenter.html">distanceToCenter</a></li>
       <li class="inherited"><a href="firestore_helpers/Area/noSuchMethod.html">noSuchMethod</a></li>
       <li class="inherited"><a href="firestore_helpers/Area/toString.html">toString</a></li>
     
@@ -67,13 +70,13 @@
 
     <section class="multi-line-signature">
       
-      <span class="name ">Area</span>(<wbr><span class="parameter" id="-param-center"><span class="type-annotation">GeoPoint</span> <span class="parameter-name">center</span>, </span> <span class="parameter" id="-param-radius"><span class="type-annotation">double</span> <span class="parameter-name">radius</span></span>)
+      <span class="name ">Area</span>(<wbr><span class="parameter" id="-param-center"><span class="type-annotation">GeoPoint</span> <span class="parameter-name">center</span>, </span> <span class="parameter" id="-param-radiusInKilometers"><span class="type-annotation">double</span> <span class="parameter-name">radiusInKilometers</span></span>)
     </section>
 
     
     <section class="summary source-code" id="source">
       <h2><span>Implementation</span> </h2>
-      <pre class="language-dart"><code class="language-dart">Area(this.center, this.radius);</code></pre>
+      <pre class="language-dart"><code class="language-dart">Area(this.center, this.radiusInKilometers);</code></pre>
     </section>
 
   </div> <!-- /.main-content -->
@@ -85,7 +88,7 @@
 
 <footer>
   <span class="no-break">
-    firestore_helpers 1.0.0+1
+    firestore_helpers 1.0.1
   </span>
 
 </footer>

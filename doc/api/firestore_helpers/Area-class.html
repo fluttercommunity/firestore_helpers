@@ -49,16 +49,24 @@
       <li class="section-title"><a href="firestore_helpers/firestore_helpers-library.html#functions">Functions</a></li>
       <li><a href="firestore_helpers/boundingBoxCoordinates.html">boundingBoxCoordinates</a></li>
       <li><a href="firestore_helpers/buildQuery.html">buildQuery</a></li>
+      <li><a href="firestore_helpers/coordinatesValid.html">coordinatesValid</a></li>
       <li><a href="firestore_helpers/degreesToRadians.html">degreesToRadians</a></li>
-      <li><a href="firestore_helpers/distance.html">distance</a></li>
-      <li><a href="firestore_helpers/getData.html">getData</a></li>
+      <li><a href="firestore_helpers/distanceInKilometers.html">distanceInKilometers</a></li>
+      <li><a href="firestore_helpers/geoPointValid.html">geoPointValid</a></li>
+      <li><a href="firestore_helpers/getDataFromQuery.html">getDataFromQuery</a></li>
+      <li><a href="firestore_helpers/getDataInArea.html">getDataInArea</a></li>
       <li><a href="firestore_helpers/getLocationsConstraint.html">getLocationsConstraint</a></li>
-      <li><a href="firestore_helpers/metersToLongitudeDegrees.html">metersToLongitudeDegrees</a></li>
+      <li><a href="firestore_helpers/kilometersToLongitudeDegrees.html">kilometersToLongitudeDegrees</a></li>
       <li><a href="firestore_helpers/wrapLongitude.html">wrapLongitude</a></li>
     
     
       <li class="section-title"><a href="firestore_helpers/firestore_helpers-library.html#typedefs">Typedefs</a></li>
+      <li><a href="firestore_helpers/DistanceAccessor.html">DistanceAccessor</a></li>
+      <li><a href="firestore_helpers/DistanceMapper.html">DistanceMapper</a></li>
       <li><a href="firestore_helpers/DocumentMapper.html">DocumentMapper</a></li>
+      <li><a href="firestore_helpers/ItemComparer.html">ItemComparer</a></li>
+      <li><a href="firestore_helpers/ItemFilter.html">ItemFilter</a></li>
+      <li><a href="firestore_helpers/LocationAccessor.html">LocationAccessor</a></li>
     
     </ol>
   </div>
@@ -67,7 +75,7 @@
     <h1>Area class</h1>
 
     <section class="desc markdown">
-      <p>Defines the search area by a  circle <a href="firestore_helpers/Area/center.html">center</a> / <a href="firestore_helpers/Area/radius.html">radius</a>
+      <p>Defines the search area by a  circle <a href="firestore_helpers/Area/center.html">center</a> / <a href="firestore_helpers/Area/radiusInKilometers.html">radiusInKilometers</a>
 Based on the limitations of FireStore we can only search in rectangles
 which means that from this definition a final search square is calculated
 that contains the circle</p>
@@ -79,10 +87,24 @@ that contains the circle</p>
 
       <dl class="constructor-summary-list">
         <dt id="Area" class="callable">
-          <span class="name"><a href="firestore_helpers/Area/Area.html">Area</a></span><span class="signature">(<span class="parameter" id="-param-center"><span class="type-annotation">GeoPoint</span> <span class="parameter-name">center</span>, </span> <span class="parameter" id="-param-radius"><span class="type-annotation">double</span> <span class="parameter-name">radius</span></span>)</span>
+          <span class="name"><a href="firestore_helpers/Area/Area.html">Area</a></span><span class="signature">(<span class="parameter" id="-param-center"><span class="type-annotation">GeoPoint</span> <span class="parameter-name">center</span>, </span> <span class="parameter" id="-param-radiusInKilometers"><span class="type-annotation">double</span> <span class="parameter-name">radiusInKilometers</span></span>)</span>
         </dt>
         <dd>
           
+        </dd>
+        <dt id="Area.inMeters" class="callable">
+          <span class="name"><a href="firestore_helpers/Area/Area.inMeters.html">Area.inMeters</a></span><span class="signature">(<span class="parameter" id="inMeters-param-gp"><span class="type-annotation">GeoPoint</span> <span class="parameter-name">gp</span>, </span> <span class="parameter" id="inMeters-param-radiusInMeters"><span class="type-annotation">int</span> <span class="parameter-name">radiusInMeters</span></span>)</span>
+        </dt>
+        <dd>
+          
+          <div class="constructor-modifier features">factory</div>
+        </dd>
+        <dt id="Area.inMiles" class="callable">
+          <span class="name"><a href="firestore_helpers/Area/Area.inMiles.html">Area.inMiles</a></span><span class="signature">(<span class="parameter" id="inMiles-param-gp"><span class="type-annotation">GeoPoint</span> <span class="parameter-name">gp</span>, </span> <span class="parameter" id="inMiles-param-radiusMiles"><span class="type-annotation">int</span> <span class="parameter-name">radiusMiles</span></span>)</span>
+        </dt>
+        <dd>
+          
+          <div class="constructor-modifier features">factory</div>
         </dd>
       </dl>
     </section>
@@ -99,8 +121,8 @@ that contains the circle</p>
           
           <div class="features">final</div>
 </dd>
-        <dt id="radius" class="property">
-          <span class="name"><a href="firestore_helpers/Area/radius.html">radius</a></span>
+        <dt id="radiusInKilometers" class="property">
+          <span class="name"><a href="firestore_helpers/Area/radiusInKilometers.html">radiusInKilometers</a></span>
           <span class="signature">&#8594; double</span>
         </dt>
         <dd>
@@ -126,9 +148,18 @@ that contains the circle</p>
       </dl>
     </section>
 
-    <section class="summary offset-anchor inherited" id="instance-methods">
+    <section class="summary offset-anchor" id="instance-methods">
       <h2>Methods</h2>
       <dl class="callables">
+        <dt id="distanceToCenter" class="callable">
+          <span class="name"><a href="firestore_helpers/Area/distanceToCenter.html">distanceToCenter</a></span><span class="signature">(<wbr><span class="parameter" id="distanceToCenter-param-point"><span class="type-annotation">GeoPoint</span> <span class="parameter-name">point</span></span>)
+            <span class="returntype parameter">&#8594; double</span>
+          </span>
+        </dt>
+        <dd>
+          
+          
+</dd>
         <dt id="noSuchMethod" class="callable inherited">
           <span class="name"><a href="firestore_helpers/Area/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation">Invocation</span> <span class="parameter-name">invocation</span></span>)
             <span class="returntype parameter">&#8594; dynamic</span>
@@ -174,16 +205,19 @@ that contains the circle</p>
     <ol>
       <li class="section-title"><a href="firestore_helpers/Area-class.html#constructors">Constructors</a></li>
       <li><a href="firestore_helpers/Area/Area.html">Area</a></li>
+      <li><a href="firestore_helpers/Area/Area.inMeters.html">inMeters</a></li>
+      <li><a href="firestore_helpers/Area/Area.inMiles.html">inMiles</a></li>
     
       <li class="section-title">
         <a href="firestore_helpers/Area-class.html#instance-properties">Properties</a>
       </li>
       <li><a href="firestore_helpers/Area/center.html">center</a></li>
-      <li><a href="firestore_helpers/Area/radius.html">radius</a></li>
+      <li><a href="firestore_helpers/Area/radiusInKilometers.html">radiusInKilometers</a></li>
       <li class="inherited"><a href="firestore_helpers/Area/hashCode.html">hashCode</a></li>
       <li class="inherited"><a href="firestore_helpers/Area/runtimeType.html">runtimeType</a></li>
     
-      <li class="section-title inherited"><a href="firestore_helpers/Area-class.html#instance-methods">Methods</a></li>
+      <li class="section-title"><a href="firestore_helpers/Area-class.html#instance-methods">Methods</a></li>
+      <li><a href="firestore_helpers/Area/distanceToCenter.html">distanceToCenter</a></li>
       <li class="inherited"><a href="firestore_helpers/Area/noSuchMethod.html">noSuchMethod</a></li>
       <li class="inherited"><a href="firestore_helpers/Area/toString.html">toString</a></li>
     
@@ -199,7 +233,7 @@ that contains the circle</p>
 
 <footer>
   <span class="no-break">
-    firestore_helpers 1.0.0+1
+    firestore_helpers 1.0.1
   </span>
 
 </footer>
