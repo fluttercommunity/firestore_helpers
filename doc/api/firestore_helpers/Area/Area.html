@@ -76,7 +76,8 @@
     
     <section class="summary source-code" id="source">
       <h2><span>Implementation</span> </h2>
-      <pre class="language-dart"><code class="language-dart">Area(this.center, this.radiusInKilometers);</code></pre>
+      <pre class="language-dart"><code class="language-dart">Area(this.center, this.radiusInKilometers):
+assert(geoPointValid(center)), assert(radiusInKilometers &gt;= 0);</code></pre>
     </section>
 
   </div> <!-- /.main-content -->

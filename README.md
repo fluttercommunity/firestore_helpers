@@ -290,9 +290,6 @@ Stream<List<EventData>> getEvents(area) {
 ```
 
 
-
-
-
 **IMPORTANT** to enable FireStore to execute queries based on `GeopPoints` you can not serialize the GeoPoints before you hand them to FireStore's `setData` if you use a code generator that does not allow to mark certain field as passthrough you have to set the value manually like here. 
 
 ```Dart
