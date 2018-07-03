@@ -92,7 +92,8 @@ class Area {
   final GeoPoint center;
   final double radiusInKilometers;
 
-  Area(this.center, this.radiusInKilometers);
+  Area(this.center, this.radiusInKilometers): 
+  assert(geoPointValid(center)), assert(radiusInKilometers >= 0);
 
   factory Area.inMeters(GeoPoint gp, int radiusInMeters) {
     return new Area(gp, radiusInMeters / 1000.0);
@@ -102,6 +103,7 @@ class Area {
     return new Area(gp, radiusMiles * 1.60934);
   }
 
+  /// returns the distance in km of [point] to center
   double distanceToCenter(GeoPoint point) {
     return distanceInKilometers(center, point);
   }
@@ -219,7 +221,7 @@ Stream<List<T>> getDataInArea<T>(
     @required DocumentMapper<T> mapper,
     @required String locationFieldNameInDB,
     LocationAccessor<T> locationAccessor,
-    List<ItemFilter> clientSitefilters,
+    List<ItemFilter<T>> clientSitefilters,
     DistanceMapper<T> distanceMapper,
     DistanceAccessor<T> distanceAccessor,
     bool sortDecending = false}) {
