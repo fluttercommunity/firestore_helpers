@@ -92,8 +92,9 @@ class Area {
   final GeoPoint center;
   final double radiusInKilometers;
 
-  Area(this.center, this.radiusInKilometers): 
-  assert(geoPointValid(center)), assert(radiusInKilometers >= 0);
+  Area(this.center, this.radiusInKilometers)
+      : assert(geoPointValid(center)),
+        assert(radiusInKilometers >= 0);
 
   factory Area.inMeters(GeoPoint gp, int radiusInMeters) {
     return new Area(gp, radiusInMeters / 1000.0);
@@ -181,39 +182,39 @@ List<QueryConstraint> getLocationsConstraint(String fieldName, Area area) {
   return query;
 }
 
-/// function typse used to acces the field that contains the loaction inside 
+/// function typse used to acces the field that contains the loaction inside
 /// the generic type
 typedef LocationAccessor<T> = GeoPoint Function(T item);
 
-/// function typse used to access the distance field that contains the 
+/// function typse used to access the distance field that contains the
 /// distance to the target inside the generic type
 typedef DistanceAccessor<T> = double Function(T item);
 
 typedef DistanceMapper<T> = T Function(T item, double itemsDistance);
 
 ///
-/// Provides as Stream of lists of data items of type [T] that have a location field in a 
+/// Provides as Stream of lists of data items of type [T] that have a location field in a
 /// specified area sorted by the distance of to the areas center.
 /// [area]  : The area that constraints the query
 /// [collection] : The source FireStore document collection
-/// [mapper] : mapping function that gets applied to every document in the query. 
+/// [mapper] : mapping function that gets applied to every document in the query.
 /// Typically used to deserialize the Map returned from FireStore
-/// [locationFieldInDb] : The name of the data field in your FireStore document. 
+/// [locationFieldInDb] : The name of the data field in your FireStore document.
 /// Need to make the location based search on the server side
-/// [locationAccessor] : As this is a generic function it cannot know where your 
+/// [locationAccessor] : As this is a generic function it cannot know where your
 /// location is stored in you generic type.
 /// optional if you don't use [distanceMapper] and don't want to sort by distance
-/// Therefore pass a function that returns a valur from the location field inside 
+/// Therefore pass a function that returns a valur from the location field inside
 /// your generic type.
-/// [distanceMapper] : optional mapper that gets the distance to the center of the 
+/// [distanceMapper] : optional mapper that gets the distance to the center of the
 /// area passed to give you the chance to save this inside your item
 /// if you use a [distanceMapper] you HAVE to pass [locationAccessor]
-/// [clientSideFilters] : optional list of filter functions that execute a `.where()` 
+/// [clientSideFilters] : optional list of filter functions that execute a `.where()`
 /// on the result on the client side
-/// [distanceAccessor] : if you have stored the distance using a [distanceMapper] passing 
+/// [distanceAccessor] : if you have stored the distance using a [distanceMapper] passing
 /// this accessor function will prevent additional distance computing for sorting.
-/// [sortDecending] : if the resulting list should be sorted descending by the distance 
-/// to the area's center. If you don't provide [loacationAccessor] or [distanceAccessor] 
+/// [sortDecending] : if the resulting list should be sorted descending by the distance
+/// to the area's center. If you don't provide [loacationAccessor] or [distanceAccessor]
 /// no sorting is done
 Stream<List<T>> getDataInArea<T>(
     {@required Area area,
