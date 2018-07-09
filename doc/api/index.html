@@ -276,7 +276,8 @@ Stream&lt;List&lt;EventData&gt;&gt; getEvents(area) {
         mapper: (eventDoc) {
           var event = _eventSerializer.fromMap(eventDoc.data);
           // if you serializer does not pass types like GeoPoint through
-          // you have to add that fields manually
+          // you have to add that fields manually. If using `jaguar_serializer` 
+          // add @pass attribute to the GeoPoint field and you can omit this. 
           event.location = eventDoc.data['location'] as GeoPoint;
           event.id = eventDoc.documentID;
           return new EventData(event);
@@ -295,11 +296,11 @@ Stream&lt;List&lt;EventData&gt;&gt; getEvents(area) {
   return null;
 }
 </code></pre>
-<p><strong>IMPORTANT</strong> to enable FireStore to execute queries based on <code>GeopPoints</code> you can not serialize the GeoPoints before you hand them to FireStore's <code>setData</code> if you use a code generator that does not allow to mark certain field as passthrough you have to set the value manually like here. </p>
+<p><strong>IMPORTANT</strong> to enable FireStore to execute queries based on <code>GeopPoints</code> you can not serialize the GeoPoints before you hand them to FireStore's <code>setData</code> if you use a code generator that does not allow to mark certain field as passthrough you have to set the value manually like here. If using <code>jaguar_serializer</code>  add <code>@pass</code> attribute to the GeoPoint field and you can omit this.</p>
 <pre class="language-Dart"><code class="language-Dart">  Future&lt;bool&gt; updateEvent(Event event) async {
     try {
       var eventData = _eventSerializer.toMap(event);
-      eventData['location'] = event.location;
+  -&gt;  eventData['location'] = event.location;
       await eventCollection.document(event.id).setData(eventData);
       return true;
     } catch (e, stack) {
@@ -310,7 +311,7 @@ Stream&lt;List&lt;EventData&gt;&gt; getEvents(area) {
     }
   }
 </code></pre>
-<p>I use <a href="https://pub.dartlang.org/flutter/packages?q=jaguar_serializer+">jaguar_serializer</a> which is great in combination with FireStore because it produces a <code>Map&lt;String, dynamic&gt;</code> instead of JSON string. Currently jaguar has a problem when with GeoPoints (which will be fixed soon hopefully) so best to mark location field with <code>@Field(dontDecode: true, dontEncode: true)</code> and add the value manually as seen above</p>
+<p>I use <a href="https://pub.dartlang.org/flutter/packages?q=jaguar_serializer+">jaguar_serializer</a> which is great in combination with FireStore because it produces a <code>Map&lt;String, dynamic&gt;</code> instead of JSON string. To make not to encode GeoPoints but pass them through just add <code>@pass</code> attribute to your <code>GeoPoint</code> fields.</p>
       </section>
       
         <section class="summary">
@@ -330,7 +331,7 @@ Stream&lt;List&lt;EventData&gt;&gt; getEvents(area) {
 
 <footer>
   <span class="no-break">
-    firestore_helpers 1.0.1
+    firestore_helpers 2.0.0+1
   </span>
 
 </footer>

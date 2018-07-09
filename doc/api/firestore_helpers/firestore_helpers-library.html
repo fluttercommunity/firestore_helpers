@@ -166,14 +166,14 @@ returns <code>true</code> if these are valid geo coordinates
           </span>
         </dt>
         <dd>
-          Convenience Method to access the data of a Query as a stream while applying 
+          Convenience Method to access the data of a Query as a stream while applying
 a mapping function on each document with optional client side filtering and sorting
 <code>qery</code> : the data source
-<code>mapper</code> : mapping function that gets applied to every document in the query. 
+<code>mapper</code> : mapping function that gets applied to every document in the query.
 Typically used to deserialize the Map returned from FireStore
-<code>clientSideFilters</code> : optional list of filter functions that execute a <code>.where()</code> 
+<code>clientSideFilters</code> : optional list of filter functions that execute a <code>.where()</code>
 on the result on the client side
-<code>orderComparer</code> : optional comparisson function. If provided your resulting data 
+<code>orderComparer</code> : optional comparisson function. If provided your resulting data
 will be sorted based on it on the client
           
 </dd>
@@ -183,28 +183,28 @@ will be sorted based on it on the client
           </span>
         </dt>
         <dd>
-          Provides as Stream of lists of data items of type <code>T</code> that have a location field in a 
+          Provides as Stream of lists of data items of type <code>T</code> that have a location field in a
 specified area sorted by the distance of to the areas center.
 <code>area</code>  : The area that constraints the query
 <code>collection</code> : The source FireStore document collection
-<code>mapper</code> : mapping function that gets applied to every document in the query. 
+<code>mapper</code> : mapping function that gets applied to every document in the query.
 Typically used to deserialize the Map returned from FireStore
-<code>locationFieldInDb</code> : The name of the data field in your FireStore document. 
+<code>locationFieldInDb</code> : The name of the data field in your FireStore document.
 Need to make the location based search on the server side
-<code>locationAccessor</code> : As this is a generic function it cannot know where your 
+<code>locationAccessor</code> : As this is a generic function it cannot know where your
 location is stored in you generic type.
 optional if you don't use <code>distanceMapper</code> and don't want to sort by distance
-Therefore pass a function that returns a valur from the location field inside 
+Therefore pass a function that returns a valur from the location field inside
 your generic type.
-<code>distanceMapper</code> : optional mapper that gets the distance to the center of the 
+<code>distanceMapper</code> : optional mapper that gets the distance to the center of the
 area passed to give you the chance to save this inside your item
 if you use a <code>distanceMapper</code> you HAVE to pass <code>locationAccessor</code>
-<code>clientSideFilters</code> : optional list of filter functions that execute a <code>.where()</code> 
+<code>clientSideFilters</code> : optional list of filter functions that execute a <code>.where()</code>
 on the result on the client side
-<code>distanceAccessor</code> : if you have stored the distance using a <code>distanceMapper</code> passing 
+<code>distanceAccessor</code> : if you have stored the distance using a <code>distanceMapper</code> passing
 this accessor function will prevent additional distance computing for sorting.
-<code>sortDecending</code> : if the resulting list should be sorted descending by the distance 
-to the area's center. If you don't provide <code>loacationAccessor</code> or <code>distanceAccessor</code> 
+<code>sortDecending</code> : if the resulting list should be sorted descending by the distance
+to the area's center. If you don't provide <code>loacationAccessor</code> or <code>distanceAccessor</code>
 no sorting is done
           
 </dd>
@@ -254,7 +254,7 @@ returns the number of degrees the distance corresponds to.
           </span>
         </dt>
         <dd>
-          function typse used to access the distance field that contains the 
+          function typse used to access the distance field that contains the
 distance to the target inside the generic type
           
 </dd>
@@ -300,7 +300,7 @@ distance to the target inside the generic type
           </span>
         </dt>
         <dd>
-          function typse used to acces the field that contains the loaction inside 
+          function typse used to acces the field that contains the loaction inside
 the generic type
           
 </dd>
@@ -350,7 +350,7 @@ the generic type
 
 <footer>
   <span class="no-break">
-    firestore_helpers 1.0.1
+    firestore_helpers 2.0.0+1
   </span>
 
 </footer>

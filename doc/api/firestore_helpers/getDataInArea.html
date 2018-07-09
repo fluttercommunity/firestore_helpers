@@ -80,28 +80,28 @@
 &lt;<wbr><span class="type-parameter">T</span>&gt;(<wbr>{<span class="parameter" id="getDataInArea-param-area"><span>@required</span> <span class="type-annotation"><a href="firestore_helpers/Area-class.html">Area</a></span> <span class="parameter-name">area</span>, </span> <span class="parameter" id="getDataInArea-param-collection"><span>@required</span> <span class="type-annotation">CollectionReference</span> <span class="parameter-name">collection</span>, </span> <span class="parameter" id="getDataInArea-param-mapper"><span>@required</span> <span class="type-annotation"><a href="firestore_helpers/DocumentMapper.html">DocumentMapper</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">mapper</span>, </span> <span class="parameter" id="getDataInArea-param-locationFieldNameInDB"><span>@required</span> <span class="type-annotation">String</span> <span class="parameter-name">locationFieldNameInDB</span>, </span> <span class="parameter" id="getDataInArea-param-locationAccessor"><span class="type-annotation"><a href="firestore_helpers/LocationAccessor.html">LocationAccessor</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">locationAccessor</span>, </span> <span class="parameter" id="getDataInArea-param-clientSitefilters"><span class="type-annotation">List<span class="signature">&lt;<wbr><span class="type-parameter"><a href="firestore_helpers/ItemFilter.html">ItemFilter</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>&gt;</span></span> <span class="parameter-name">clientSitefilters</span>, </span> <span class="parameter" id="getDataInArea-param-distanceMapper"><span class="type-annotation"><a href="firestore_helpers/DistanceMapper.html">DistanceMapper</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">distanceMapper</span>, </span> <span class="parameter" id="getDataInArea-param-distanceAccessor"><span class="type-annotation"><a href="firestore_helpers/DistanceAccessor.html">DistanceAccessor</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">distanceAccessor</span>, </span> <span class="parameter" id="getDataInArea-param-sortDecending"><span class="type-annotation">bool</span> <span class="parameter-name">sortDecending</span>: <span class="default-value">false</span></span> })
     </section>
     <section class="desc markdown">
-      <p>Provides as Stream of lists of data items of type <code>T</code> that have a location field in a 
+      <p>Provides as Stream of lists of data items of type <code>T</code> that have a location field in a
 specified area sorted by the distance of to the areas center.
 <code>area</code>  : The area that constraints the query
 <code>collection</code> : The source FireStore document collection
-<code>mapper</code> : mapping function that gets applied to every document in the query. 
+<code>mapper</code> : mapping function that gets applied to every document in the query.
 Typically used to deserialize the Map returned from FireStore
-<code>locationFieldInDb</code> : The name of the data field in your FireStore document. 
+<code>locationFieldInDb</code> : The name of the data field in your FireStore document.
 Need to make the location based search on the server side
-<code>locationAccessor</code> : As this is a generic function it cannot know where your 
+<code>locationAccessor</code> : As this is a generic function it cannot know where your
 location is stored in you generic type.
 optional if you don't use <code>distanceMapper</code> and don't want to sort by distance
-Therefore pass a function that returns a valur from the location field inside 
+Therefore pass a function that returns a valur from the location field inside
 your generic type.
-<code>distanceMapper</code> : optional mapper that gets the distance to the center of the 
+<code>distanceMapper</code> : optional mapper that gets the distance to the center of the
 area passed to give you the chance to save this inside your item
 if you use a <code>distanceMapper</code> you HAVE to pass <code>locationAccessor</code>
-<code>clientSideFilters</code> : optional list of filter functions that execute a <code>.where()</code> 
+<code>clientSideFilters</code> : optional list of filter functions that execute a <code>.where()</code>
 on the result on the client side
-<code>distanceAccessor</code> : if you have stored the distance using a <code>distanceMapper</code> passing 
+<code>distanceAccessor</code> : if you have stored the distance using a <code>distanceMapper</code> passing
 this accessor function will prevent additional distance computing for sorting.
-<code>sortDecending</code> : if the resulting list should be sorted descending by the distance 
-to the area's center. If you don't provide <code>loacationAccessor</code> or <code>distanceAccessor</code> 
+<code>sortDecending</code> : if the resulting list should be sorted descending by the distance
+to the area's center. If you don't provide <code>loacationAccessor</code> or <code>distanceAccessor</code>
 no sorting is done</p>
     </section>
     
@@ -158,7 +158,7 @@ no sorting is done</p>
 
 <footer>
   <span class="no-break">
-    firestore_helpers 1.0.1
+    firestore_helpers 2.0.0+1
   </span>
 
 </footer>

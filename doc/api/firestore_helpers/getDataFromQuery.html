@@ -80,14 +80,14 @@
 &lt;<wbr><span class="type-parameter">T</span>&gt;(<wbr>{<span class="parameter" id="getDataFromQuery-param-query"><span class="type-annotation">Query</span> <span class="parameter-name">query</span>, </span> <span class="parameter" id="getDataFromQuery-param-mapper"><span class="type-annotation"><a href="firestore_helpers/DocumentMapper.html">DocumentMapper</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">mapper</span>, </span> <span class="parameter" id="getDataFromQuery-param-clientSitefilters"><span class="type-annotation">List<span class="signature">&lt;<wbr><span class="type-parameter"><a href="firestore_helpers/ItemFilter.html">ItemFilter</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>&gt;</span></span> <span class="parameter-name">clientSitefilters</span>, </span> <span class="parameter" id="getDataFromQuery-param-orderComparer"><span class="type-annotation"><a href="firestore_helpers/ItemComparer.html">ItemComparer</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">orderComparer</span></span> })
     </section>
     <section class="desc markdown">
-      <p>Convenience Method to access the data of a Query as a stream while applying 
+      <p>Convenience Method to access the data of a Query as a stream while applying
 a mapping function on each document with optional client side filtering and sorting
 <code>qery</code> : the data source
-<code>mapper</code> : mapping function that gets applied to every document in the query. 
+<code>mapper</code> : mapping function that gets applied to every document in the query.
 Typically used to deserialize the Map returned from FireStore
-<code>clientSideFilters</code> : optional list of filter functions that execute a <code>.where()</code> 
+<code>clientSideFilters</code> : optional list of filter functions that execute a <code>.where()</code>
 on the result on the client side
-<code>orderComparer</code> : optional comparisson function. If provided your resulting data 
+<code>orderComparer</code> : optional comparisson function. If provided your resulting data
 will be sorted based on it on the client</p>
     </section>
     
@@ -124,7 +124,7 @@ will be sorted based on it on the client</p>
 
 <footer>
   <span class="no-break">
-    firestore_helpers 1.0.1
+    firestore_helpers 2.0.0+1
   </span>
 
 </footer>
