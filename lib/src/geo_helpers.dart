@@ -243,10 +243,12 @@ Stream<List<T>> getDataInArea<T>(
           {
             return null;
           }
-          return distanceMapper(item, distance);
-        } else {
-          return item;
+          if (distanceMapper != null)
+          {
+            return distanceMapper(item, distance);
+          }
         }
+          return item;
       },
       clientSitefilters: clientSitefilters != null ? ()=>clientSitefilters..insert(0,(item) => item != null) : [(item) => item != null],
       orderComparer:
