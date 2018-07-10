@@ -137,13 +137,28 @@ GeoBoundingBox boundingBoxCoordinates(Area area) {
 /// return the distance, in kilometers, between the two locations.
 ///
 double distanceInKilometers(GeoPoint p1, GeoPoint p2) {
+  // const radius = 6371; // Earth's radius in kilometers
+  final latDelta = degreesToRadians(p2.latitude - p1.latitude);
+  final lonDelta = degreesToRadians(p2.longitude - p1.longitude);
+
+  // final a = (sin(latDelta / 2) * sin(latDelta / 2)) +
+  //     (cos(degreesToRadians(p1.latitude)) *
+  //         cos(degreesToRadians(p2.latitude)) *
+  //         sin(lonDelta / 2) *
+  //         sin(lonDelta / 2));
+
+  // final c = 2 * atan2(sqrt(a), sqrt(1 - a));
+
+  // return radius * c;
+
+
         var EarthRadius = 6378.137; // WGS84 major axis
         double distance = 2 * EarthRadius * asin(
             sqrt(
-                pow(sin(p2.latitude - p1.latitude) / 2, 2)
+                pow(sin(latDelta) / 2, 2)
                     + cos(p1.latitude)
                     * cos(p2.latitude)
-                    * pow(sin(p2.longitude - p1.longitude) / 2, 2)
+                    * pow(sin(lonDelta / 2) , 2)
             )
         );
         return distance;
