@@ -1,7 +1,7 @@
 // from https://stackoverflow.com/questions/46630507/how-to-run-a-geo-nearby-query-with-firestore
 
 import 'dart:async';
-import 'dart:math' as math;
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firestore_helpers/firestore_helpers.dart';
@@ -49,7 +49,7 @@ double wrapLongitude(double longitude) {
 }
 
 double degreesToRadians(double degrees) {
-  return (degrees * math.pi) / 180;
+  return (degrees * pi) / 180;
 }
 
 ///
@@ -63,14 +63,14 @@ double kilometersToLongitudeDegrees(double distance, double latitude) {
   const E2 = 0.00669447819799;
   const EPSILON = 1e-12;
   final radians = degreesToRadians(latitude);
-  final numerator = math.cos(radians) * EARTH_EQ_RADIUS * math.pi / 180;
-  final denom = 1 / math.sqrt(1 - E2 * math.sin(radians) * math.sin(radians));
+  final numerator = cos(radians) * EARTH_EQ_RADIUS * pi / 180;
+  final denom = 1 / sqrt(1 - E2 * sin(radians) * sin(radians));
   final deltaDeg = numerator * denom;
   if (deltaDeg < EPSILON) {
     return distance > 0 ? 360.0 : 0.0;
   }
   // else
-  return math.min(360.0, distance / deltaDeg);
+  return min(360.0, distance / deltaDeg);
 }
 
 ///
@@ -117,12 +117,12 @@ class Area {
 GeoBoundingBox boundingBoxCoordinates(Area area) {
   const KM_PER_DEGREE_LATITUDE = 110.574;
   final latDegrees = area.radiusInKilometers / KM_PER_DEGREE_LATITUDE;
-  final latitudeNorth = math.min(90.0, area.center.latitude + latDegrees);
-  final latitudeSouth = math.max(-90.0, area.center.latitude - latDegrees);
+  final latitudeNorth = min(90.0, area.center.latitude + latDegrees);
+  final latitudeSouth = max(-90.0, area.center.latitude - latDegrees);
   // calculate longitude based on current latitude
   final longDegsNorth = kilometersToLongitudeDegrees(area.radiusInKilometers, latitudeNorth);
   final longDegsSouth = kilometersToLongitudeDegrees(area.radiusInKilometers, latitudeSouth);
-  final longDegs = math.max(longDegsNorth, longDegsSouth);
+  final longDegs = max(longDegsNorth, longDegsSouth);
   return new GeoBoundingBox(
       swCorner: new GeoPoint(latitudeSouth, wrapLongitude(area.center.longitude - longDegs)),
       neCorner: new GeoPoint(latitudeNorth, wrapLongitude(area.center.longitude + longDegs)));
@@ -132,24 +132,21 @@ GeoBoundingBox boundingBoxCoordinates(Area area) {
 /// Calculates the distance, in kilometers, between two locations, via the
 /// Haversine formula. Note that this is approximate due to the fact that
 /// the Earth's radius varies between 6356.752 km and 6378.137 km.
-/// [location1] The first location given
-/// [location2] The second location given
-/// sreturn the distance, in kilometers, between the two locations.
+/// [p1] The first location given
+/// [p2] The second location given
+/// return the distance, in kilometers, between the two locations.
 ///
-double distanceInKilometers(GeoPoint location1, GeoPoint location2) {
-  const radius = 6371; // Earth's radius in kilometers
-  final latDelta = degreesToRadians(location2.latitude - location1.latitude);
-  final lonDelta = degreesToRadians(location2.longitude - location1.longitude);
-
-  final a = (math.sin(latDelta / 2) * math.sin(latDelta / 2)) +
-      (math.cos(degreesToRadians(location1.latitude)) *
-          math.cos(degreesToRadians(location2.latitude)) *
-          math.sin(lonDelta / 2) *
-          math.sin(lonDelta / 2));
-
-  final c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a));
-
-  return radius * c;
+double distanceInKilometers(GeoPoint p1, GeoPoint p2) {
+        var EarthRadius = 6378.137; // WGS84 major axis
+        double distance = 2 * EarthRadius * asin(
+            sqrt(
+                pow(sin(p2.latitude - p1.latitude) / 2, 2)
+                    + cos(p1.latitude)
+                    * cos(p2.latitude)
+                    * pow(sin(p2.longitude - p2.longitude) / 2, 2)
+            )
+        );
+        return distance;
 }
 
 ///
@@ -233,14 +230,25 @@ Stream<List<T>> getDataInArea<T>(
   return getDataFromQuery<T>(
       query: query,
       mapper: (docSnapshot) {
-        if (distanceMapper != null) {
-          var item = mapper(docSnapshot);
-          return distanceMapper(item, area.distanceToCenter(locationAccessor(item)));
+        // get a real objects from FireStore 
+        var item = mapper(docSnapshot);
+        double distance;
+        if (locationAccessor != null)
+        {
+           distance = area.distanceToCenter(locationAccessor(item));
+        }
+        if (distance != null) {
+          // We might get places outside the target circle at the corners of the surrounding square
+          if (distance > area.radiusInKilometers)
+          {
+            return null;
+          }
+          return distanceMapper(item, distance);
         } else {
-          return mapper(docSnapshot);
+          return item;
         }
       },
-      clientSitefilters: clientSitefilters,
+      clientSitefilters: clientSitefilters != null ? ()=>clientSitefilters..insert(0,(item) => item != null) : [(item) => item != null],
       orderComparer:
           distanceAccessor != null // i this case we don't have to calculate the distance again
               ? (item1, item2) => sortDecending
