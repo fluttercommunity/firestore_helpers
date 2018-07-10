@@ -143,7 +143,7 @@ double distanceInKilometers(GeoPoint p1, GeoPoint p2) {
                 pow(sin(p2.latitude - p1.latitude) / 2, 2)
                     + cos(p1.latitude)
                     * cos(p2.latitude)
-                    * pow(sin(p2.longitude - p2.longitude) / 2, 2)
+                    * pow(sin(p2.longitude - p1.longitude) / 2, 2)
             )
         );
         return distance;
