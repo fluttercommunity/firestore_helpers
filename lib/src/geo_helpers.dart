@@ -137,31 +137,19 @@ GeoBoundingBox boundingBoxCoordinates(Area area) {
 /// return the distance, in kilometers, between the two locations.
 ///
 double distanceInKilometers(GeoPoint p1, GeoPoint p2) {
-  // const radius = 6371; // Earth's radius in kilometers
   final latDelta = degreesToRadians(p2.latitude - p1.latitude);
   final lonDelta = degreesToRadians(p2.longitude - p1.longitude);
 
-  // final a = (sin(latDelta / 2) * sin(latDelta / 2)) +
-  //     (cos(degreesToRadians(p1.latitude)) *
-  //         cos(degreesToRadians(p2.latitude)) *
-  //         sin(lonDelta / 2) *
-  //         sin(lonDelta / 2));
-
-  // final c = 2 * atan2(sqrt(a), sqrt(1 - a));
-
-  // return radius * c;
-
-
-        var EarthRadius = 6378.137; // WGS84 major axis
-        double distance = 2 * EarthRadius * asin(
-            sqrt(
-                pow(sin(latDelta) / 2, 2)
-                    + cos(p1.latitude)
-                    * cos(p2.latitude)
-                    * pow(sin(lonDelta / 2) , 2)
-            )
-        );
-        return distance;
+  var EarthRadius = 6378.137; // WGS84 major axis
+  double distance = 2 * EarthRadius * asin(
+      sqrt(
+          pow(sin(latDelta / 2), 2)
+              + cos(p1.latitude)
+              * cos(p2.latitude)
+              * pow(sin(lonDelta / 2) , 2)
+      )
+  );
+  return distance;
 }
 
 ///
@@ -176,6 +164,8 @@ List<QueryConstraint> getLocationsConstraint(String fieldName, Area area) {
   final lesserGeopoint = box.swCorner;
   final greaterGeopoint = box.neCorner;
 
+  assert(box.swCorner.latitude < box.neCorner.latitude);
+  assert(box.swCorner.longitude < box.neCorner.longitude);
   // print( "LOC: ${area.center.latitude}/${area.center.longitude}");
   // print( "SW: ${box.swCorner.latitude}/${box.swCorner.longitude}");
   // print( "NE: ${box.neCorner.latitude}/${box.neCorner.longitude}");
