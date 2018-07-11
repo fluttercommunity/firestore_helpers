@@ -137,19 +137,36 @@ GeoBoundingBox boundingBoxCoordinates(Area area) {
 /// return the distance, in kilometers, between the two locations.
 ///
 double distanceInKilometers(GeoPoint p1, GeoPoint p2) {
-  final latDelta = degreesToRadians(p2.latitude - p1.latitude);
-  final lonDelta = degreesToRadians(p2.longitude - p1.longitude);
+  final dlat = degreesToRadians(p2.latitude - p1.latitude);
+  final dlon = degreesToRadians(p2.longitude - p1.longitude);
+  final lat1 = degreesToRadians(p1.latitude);
+  final lat2 = degreesToRadians(p2.latitude);
 
-  var EarthRadius = 6378.137; // WGS84 major axis
-  double distance = 2 * EarthRadius * asin(
+
+  final r = 6378.137; // WGS84 major axis
+  double c = 2 * asin(
       sqrt(
-          pow(sin(latDelta / 2), 2)
-              + cos(p1.latitude)
-              * cos(p2.latitude)
-              * pow(sin(lonDelta / 2) , 2)
+          pow(sin(dlat / 2), 2)
+              + cos(lat1)
+              * cos(lat2)
+              * pow(sin(dlon / 2) , 2)
       )
   );
-  return distance;
+  return r*c;
+}
+
+// Spherical Law of Cosines
+double distanceInKilometers2(GeoPoint p1, GeoPoint p2) {
+  final earthRadius = 6378.137; // WGS84 major axis
+
+
+  final lon1 = degreesToRadians(p1.longitude);
+  final lon2 = degreesToRadians(p2.longitude);
+  final lat1 = degreesToRadians(p1.latitude);
+  final lat2 = degreesToRadians(p2.latitude);
+
+  final distance =  acos(sin(lat1)*sin(lat2)+cos(lat1)*cos(lat2)*cos(lon2 - lon1));
+  return distance * earthRadius;
 }
 
 ///
