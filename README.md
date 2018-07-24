@@ -264,6 +264,7 @@ class EventData{
 Stream<List<EventData>> getEvents(area) {
   try {
     return getDataInArea(
+        collection: Firestore.instance.collection("events"),
         area: area,
         locationFieldNameInDB: 'loction',        
         mapper: (eventDoc) {

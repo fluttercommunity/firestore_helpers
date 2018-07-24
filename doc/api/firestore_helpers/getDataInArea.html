@@ -52,6 +52,7 @@
       <li><a href="firestore_helpers/coordinatesValid.html">coordinatesValid</a></li>
       <li><a href="firestore_helpers/degreesToRadians.html">degreesToRadians</a></li>
       <li><a href="firestore_helpers/distanceInKilometers.html">distanceInKilometers</a></li>
+      <li><a href="firestore_helpers/distanceInKilometers2.html">distanceInKilometers2</a></li>
       <li><a href="firestore_helpers/geoPointValid.html">geoPointValid</a></li>
       <li><a href="firestore_helpers/getDataFromQuery.html">getDataFromQuery</a></li>
       <li><a href="firestore_helpers/getDataInArea.html">getDataInArea</a></li>
@@ -124,14 +125,27 @@ no sorting is done</p>
   return getDataFromQuery&lt;T&gt;(
       query: query,
       mapper: (docSnapshot) {
-        if (distanceMapper != null) {
-          var item = mapper(docSnapshot);
-          return distanceMapper(item, area.distanceToCenter(locationAccessor(item)));
-        } else {
-          return mapper(docSnapshot);
+        &#47;&#47; get a real objects from FireStore
+        var item = mapper(docSnapshot);
+        double distance;
+        if (locationAccessor != null)
+        {
+           distance = area.distanceToCenter(locationAccessor(item));
         }
+        if (distance != null) {
+          &#47;&#47; We might get places outside the target circle at the corners of the surrounding square
+          if (distance &gt; area.radiusInKilometers)
+          {
+            return null;
+          }
+          if (distanceMapper != null)
+          {
+            return distanceMapper(item, distance);
+          }
+        }
+          return item;
       },
-      clientSitefilters: clientSitefilters,
+      clientSitefilters: clientSitefilters != null ? ()=&gt;clientSitefilters..insert(0,(item) =&gt; item != null) : [(item) =&gt; item != null],
       orderComparer:
           distanceAccessor != null &#47;&#47; i this case we don&#39;t have to calculate the distance again
               ? (item1, item2) =&gt; sortDecending
@@ -158,7 +172,7 @@ no sorting is done</p>
 
 <footer>
   <span class="no-break">
-    firestore_helpers 2.0.0+1
+    firestore_helpers 2.0.3+1
   </span>
 
 </footer>

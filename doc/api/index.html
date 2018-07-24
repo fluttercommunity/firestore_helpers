@@ -271,6 +271,7 @@ class EventData{
 Stream&lt;List&lt;EventData&gt;&gt; getEvents(area) {
   try {
     return getDataInArea(
+        collection: Firestore.instance.collection("events"),
         area: area,
         locationFieldNameInDB: 'loction',        
         mapper: (eventDoc) {
@@ -331,7 +332,7 @@ Stream&lt;List&lt;EventData&gt;&gt; getEvents(area) {
 
 <footer>
   <span class="no-break">
-    firestore_helpers 2.0.0+1
+    firestore_helpers 2.0.3+1
   </span>
 
 </footer>

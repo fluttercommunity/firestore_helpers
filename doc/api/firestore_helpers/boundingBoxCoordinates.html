@@ -52,6 +52,7 @@
       <li><a href="firestore_helpers/coordinatesValid.html">coordinatesValid</a></li>
       <li><a href="firestore_helpers/degreesToRadians.html">degreesToRadians</a></li>
       <li><a href="firestore_helpers/distanceInKilometers.html">distanceInKilometers</a></li>
+      <li><a href="firestore_helpers/distanceInKilometers2.html">distanceInKilometers2</a></li>
       <li><a href="firestore_helpers/geoPointValid.html">geoPointValid</a></li>
       <li><a href="firestore_helpers/getDataFromQuery.html">getDataFromQuery</a></li>
       <li><a href="firestore_helpers/getDataInArea.html">getDataInArea</a></li>
@@ -90,12 +91,12 @@ and the radius of the box (in kilometers)</p>
       <pre class="language-dart"><code class="language-dart">GeoBoundingBox boundingBoxCoordinates(Area area) {
   const KM_PER_DEGREE_LATITUDE = 110.574;
   final latDegrees = area.radiusInKilometers &#47; KM_PER_DEGREE_LATITUDE;
-  final latitudeNorth = math.min(90.0, area.center.latitude + latDegrees);
-  final latitudeSouth = math.max(-90.0, area.center.latitude - latDegrees);
+  final latitudeNorth = min(90.0, area.center.latitude + latDegrees);
+  final latitudeSouth = max(-90.0, area.center.latitude - latDegrees);
   &#47;&#47; calculate longitude based on current latitude
   final longDegsNorth = kilometersToLongitudeDegrees(area.radiusInKilometers, latitudeNorth);
   final longDegsSouth = kilometersToLongitudeDegrees(area.radiusInKilometers, latitudeSouth);
-  final longDegs = math.max(longDegsNorth, longDegsSouth);
+  final longDegs = max(longDegsNorth, longDegsSouth);
   return new GeoBoundingBox(
       swCorner: new GeoPoint(latitudeSouth, wrapLongitude(area.center.longitude - longDegs)),
       neCorner: new GeoPoint(latitudeNorth, wrapLongitude(area.center.longitude + longDegs)));
@@ -111,7 +112,7 @@ and the radius of the box (in kilometers)</p>
 
 <footer>
   <span class="no-break">
-    firestore_helpers 2.0.0+1
+    firestore_helpers 2.0.3+1
   </span>
 
 </footer>

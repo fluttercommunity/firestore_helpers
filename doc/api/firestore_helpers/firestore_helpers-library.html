@@ -135,7 +135,7 @@ returns <code>true</code> if these are valid geo coordinates
           
 </dd>
         <dt id="distanceInKilometers" class="callable">
-          <span class="name"><a href="firestore_helpers/distanceInKilometers.html">distanceInKilometers</a></span><span class="signature">(<wbr><span class="parameter" id="distanceInKilometers-param-location1"><span class="type-annotation">GeoPoint</span> <span class="parameter-name">location1</span>, </span> <span class="parameter" id="distanceInKilometers-param-location2"><span class="type-annotation">GeoPoint</span> <span class="parameter-name">location2</span></span>)
+          <span class="name"><a href="firestore_helpers/distanceInKilometers.html">distanceInKilometers</a></span><span class="signature">(<wbr><span class="parameter" id="distanceInKilometers-param-p1"><span class="type-annotation">GeoPoint</span> <span class="parameter-name">p1</span>, </span> <span class="parameter" id="distanceInKilometers-param-p2"><span class="type-annotation">GeoPoint</span> <span class="parameter-name">p2</span></span>)
             <span class="returntype parameter">&#8594; double</span>
           </span>
         </dt>
@@ -143,9 +143,18 @@ returns <code>true</code> if these are valid geo coordinates
           Calculates the distance, in kilometers, between two locations, via the
 Haversine formula. Note that this is approximate due to the fact that
 the Earth's radius varies between 6356.752 km and 6378.137 km.
-<code>location1</code> The first location given
-<code>location2</code> The second location given
-sreturn the distance, in kilometers, between the two locations.
+<code>p1</code> The first location given
+<code>p2</code> The second location given
+return the distance, in kilometers, between the two locations.
+          
+</dd>
+        <dt id="distanceInKilometers2" class="callable">
+          <span class="name"><a href="firestore_helpers/distanceInKilometers2.html">distanceInKilometers2</a></span><span class="signature">(<wbr><span class="parameter" id="distanceInKilometers2-param-p1"><span class="type-annotation">GeoPoint</span> <span class="parameter-name">p1</span>, </span> <span class="parameter" id="distanceInKilometers2-param-p2"><span class="type-annotation">GeoPoint</span> <span class="parameter-name">p2</span></span>)
+            <span class="returntype parameter">&#8594; double</span>
+          </span>
+        </dt>
+        <dd>
+          
           
 </dd>
         <dt id="geoPointValid" class="callable">
@@ -327,6 +336,7 @@ the generic type
       <li><a href="firestore_helpers/coordinatesValid.html">coordinatesValid</a></li>
       <li><a href="firestore_helpers/degreesToRadians.html">degreesToRadians</a></li>
       <li><a href="firestore_helpers/distanceInKilometers.html">distanceInKilometers</a></li>
+      <li><a href="firestore_helpers/distanceInKilometers2.html">distanceInKilometers2</a></li>
       <li><a href="firestore_helpers/geoPointValid.html">geoPointValid</a></li>
       <li><a href="firestore_helpers/getDataFromQuery.html">getDataFromQuery</a></li>
       <li><a href="firestore_helpers/getDataInArea.html">getDataInArea</a></li>
@@ -350,7 +360,7 @@ the generic type
 
 <footer>
   <span class="no-break">
-    firestore_helpers 2.0.0+1
+    firestore_helpers 2.0.3+1
   </span>
 
 </footer>

@@ -1,6 +1,6 @@
 name: firestore_helpers
 description: Firestore helper function to create dynamic and location based queries
-version: 2.0.3
+version: 2.0.3+1
 maintainer: Thomas Burkhart (@escamoteur)
 authors: 
 - Flutter Community <flutter-community@googlegroups.com>

@@ -52,6 +52,7 @@
       <li><a href="firestore_helpers/coordinatesValid.html">coordinatesValid</a></li>
       <li><a href="firestore_helpers/degreesToRadians.html">degreesToRadians</a></li>
       <li><a href="firestore_helpers/distanceInKilometers.html">distanceInKilometers</a></li>
+      <li><a href="firestore_helpers/distanceInKilometers2.html">distanceInKilometers2</a></li>
       <li><a href="firestore_helpers/geoPointValid.html">geoPointValid</a></li>
       <li><a href="firestore_helpers/getDataFromQuery.html">getDataFromQuery</a></li>
       <li><a href="firestore_helpers/getDataInArea.html">getDataInArea</a></li>
@@ -94,14 +95,14 @@ returns the number of degrees the distance corresponds to.</p>
   const E2 = 0.00669447819799;
   const EPSILON = 1e-12;
   final radians = degreesToRadians(latitude);
-  final numerator = math.cos(radians) * EARTH_EQ_RADIUS * math.pi &#47; 180;
-  final denom = 1 &#47; math.sqrt(1 - E2 * math.sin(radians) * math.sin(radians));
+  final numerator = cos(radians) * EARTH_EQ_RADIUS * pi &#47; 180;
+  final denom = 1 &#47; sqrt(1 - E2 * sin(radians) * sin(radians));
   final deltaDeg = numerator * denom;
   if (deltaDeg &lt; EPSILON) {
     return distance &gt; 0 ? 360.0 : 0.0;
   }
   &#47;&#47; else
-  return math.min(360.0, distance &#47; deltaDeg);
+  return min(360.0, distance &#47; deltaDeg);
 }</code></pre>
     </section>
 
@@ -114,7 +115,7 @@ returns the number of degrees the distance corresponds to.</p>
 
 <footer>
   <span class="no-break">
-    firestore_helpers 2.0.0+1
+    firestore_helpers 2.0.3+1
   </span>
 
 </footer>

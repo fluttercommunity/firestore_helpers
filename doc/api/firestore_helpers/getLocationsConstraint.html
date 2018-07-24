@@ -52,6 +52,7 @@
       <li><a href="firestore_helpers/coordinatesValid.html">coordinatesValid</a></li>
       <li><a href="firestore_helpers/degreesToRadians.html">degreesToRadians</a></li>
       <li><a href="firestore_helpers/distanceInKilometers.html">distanceInKilometers</a></li>
+      <li><a href="firestore_helpers/distanceInKilometers2.html">distanceInKilometers2</a></li>
       <li><a href="firestore_helpers/geoPointValid.html">geoPointValid</a></li>
       <li><a href="firestore_helpers/getDataFromQuery.html">getDataFromQuery</a></li>
       <li><a href="firestore_helpers/getDataInArea.html">getDataInArea</a></li>
@@ -95,6 +96,8 @@
   final lesserGeopoint = box.swCorner;
   final greaterGeopoint = box.neCorner;
 
+  assert(box.swCorner.latitude &lt; box.neCorner.latitude);
+  assert(box.swCorner.longitude &lt; box.neCorner.longitude);
   &#47;&#47; print( &quot;LOC: ${area.center.latitude}&#47;${area.center.longitude}&quot;);
   &#47;&#47; print( &quot;SW: ${box.swCorner.latitude}&#47;${box.swCorner.longitude}&quot;);
   &#47;&#47; print( &quot;NE: ${box.neCorner.latitude}&#47;${box.neCorner.longitude}&quot;);
@@ -123,7 +126,7 @@
 
 <footer>
   <span class="no-break">
-    firestore_helpers 2.0.0+1
+    firestore_helpers 2.0.3+1
   </span>
 
 </footer>
