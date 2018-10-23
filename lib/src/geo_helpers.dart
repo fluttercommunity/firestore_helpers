@@ -100,7 +100,7 @@ class Area {
     return new Area(gp, radiusInMeters / 1000.0);
   }
 
-  factory Area.inMiles(GeoPoint gp, int radiusMiles) {
+  factory Area.inMiles(GeoPoint gp, double radiusMiles) {
     return new Area(gp, radiusMiles * 1.60934);
   }
 
