@@ -2,7 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firestorehelpertest/databaseservice.dart';
 import 'package:firestorehelpertest/location.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
+/// This is a little demo app to test `getDataInArea` 
+/// If you want to try this you have to create your own 
+/// Firebase project and add the google-service.json.
 
 void main() => runApp(MyApp());
 
@@ -34,6 +37,10 @@ class _MyHomePageState extends State<MyHomePage> {
   double newLongitude;
   String newName;
 
+  double currentLatitude = 35.681167;
+  double currentLongitude = 139.767052;
+  double currentRadius = 1000;
+
   final DatabaseService dbService = new DatabaseService();
 
   @override
@@ -55,18 +62,26 @@ class _MyHomePageState extends State<MyHomePage> {
                   width: 10.0,
                 ),
                 Expanded(
-                    child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'lat',
+                  child: TextField(
+                    controller:
+                        TextEditingController(text: currentLatitude.toString()),
+                    onChanged: (s) => currentLatitude = double.parse(s),
+                    decoration: InputDecoration(
+                      hintText: 'lat',
+                    ),
                   ),
-                )),
+                ),
                 SizedBox(
                   width: 10.0,
                 ),
                 Expanded(
-                    child: TextField(
-                  decoration: InputDecoration(hintText: 'long'),
-                ))
+                  child: TextField(
+                    controller: TextEditingController(
+                        text: currentLongitude.toString()),
+                    onChanged: (s) => currentLongitude = double.parse(s),
+                    decoration: InputDecoration(hintText: 'long'),
+                  ),
+                )
               ],
             ),
             Row(
@@ -77,21 +92,47 @@ class _MyHomePageState extends State<MyHomePage> {
                   width: 10.0,
                 ),
                 Expanded(
-                    child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'radius in km',
+                  child: TextField(
+                    controller:
+                        TextEditingController(text: currentRadius.toString()),
+                    onChanged: (s) => currentRadius = double.parse(s),
+                    decoration: InputDecoration(
+                      hintText: 'radius in km',
+                    ),
                   ),
-                )),
+                ),
                 SizedBox(
                   width: 10.0,
                 ),
                 RaisedButton(
                   child: Text('Update'),
+                  onPressed: () => setState(() {}),
                 ),
               ],
             ),
             Expanded(
-              child: Placeholder(),
+              child: StreamBuilder<List<Location>>(
+                stream: dbService.getLocations(
+                    center: GeoPoint(currentLatitude, currentLongitude),
+                    radiusInKm: currentRadius),
+                builder: (context, snapShot) {
+                  if (!snapShot.hasData || snapShot.data.isEmpty) {
+                    return Center(child: Text('No Data'));
+                  } else {
+                    return ListView.builder(
+                        itemCount: snapShot.data.length,
+                        itemBuilder: (context, index) {
+                          var item = snapShot.data[index];
+
+                          return ListTile(
+                            title: Text(
+                                '${item.name}   (lat:${item.position.latitude} / long:${item.position.longitude})'),
+                            subtitle: Text('distance: ${item.distance}'),
+                          );
+                        });
+                  }
+                },
+              ),
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -129,7 +170,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 Expanded(
                   child: TextField(
-                    onChanged: (s) => setState(() => newLatitude = double.parse(s)),
+                    onChanged: (s) =>
+                        setState(() => newLatitude = double.parse(s)),
                     decoration: InputDecoration(
                       hintText: 'lat',
                     ),
@@ -140,7 +182,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 Expanded(
                   child: TextField(
-                    onChanged: (s) => setState(() => newLongitude = double.parse(s)),
+                    onChanged: (s) =>
+                        setState(() => newLongitude = double.parse(s)),
                     decoration: InputDecoration(hintText: 'long'),
                   ),
                 )
@@ -153,11 +196,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> addLocation() async {
-      await dbService.createLocation(new Location(newName, GeoPoint(newLatitude, newLongitude)));
-      newName = null;
-      newLatitude = null;
-      newLongitude = null;
-      setState((){});
-
+    await dbService.createLocation(
+        new Location(newName, GeoPoint(newLatitude, newLongitude)));
+    newName = null;
+    newLatitude = null;
+    newLongitude = null;
+    setState(() {});
   }
 }

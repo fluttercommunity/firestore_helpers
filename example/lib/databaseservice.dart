@@ -17,6 +17,8 @@ class DatabaseService
         area: Area(center, radiusInKm),
         locationFieldNameInDB: 'position',
         mapper: (doc) => LocationSerializer().fromMap(doc.data),
+        locationAccessor: (item) => item.position,
+        // The distancemapper is applied after the mapper
         distanceMapper: (item, dist) {
             item.distance = dist;
             return item;
