@@ -249,6 +249,13 @@ Stream<List<T>> getDataInArea<T>(
 
   var query = buildQuery(
       collection: collection, constraints: getLocationsConstraint(locationFieldNameInDB, area));
+
+  if (clientSitefilters != null) {
+    clientSitefilters..insert(0, (item) => item != null);
+  } else {
+    clientSitefilters = [(item) => item != null];
+  }
+
   return getDataFromQuery<T>(
       query: query,
       mapper: (docSnapshot) {
@@ -272,7 +279,7 @@ Stream<List<T>> getDataInArea<T>(
         }
           return item;
       },
-      clientSitefilters: clientSitefilters != null ? ()=>clientSitefilters..insert(0,(item) => item != null) : [(item) => item != null],
+      clientSitefilters: clientSitefilters,
       orderComparer:
           distanceAccessor != null // i this case we don't have to calculate the distance again
               ? (item1, item2) => sortDecending
