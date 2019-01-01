@@ -76,8 +76,10 @@
     <h1>QueryConstraint class</h1>
 
     <section class="desc markdown">
-      <p>Used by <a href="firestore_helpers/buildQuery.html">buildQuery</a> to define a list of constraints. Important besides the <a href="firestore_helpers/QueryConstraint/field.html">field</a> property not more than one of the others can ne <code>!=null</code>.
-They corespond to the possisble parameters of Firestore`s <code>where()</code> method.</p>
+      <p>Used by <a href="firestore_helpers/buildQuery.html">buildQuery</a>  and <a href="firestore_helpers/getDataInArea.html">getDataInArea</a> to define a list of constraints. Important besides the <a href="firestore_helpers/QueryConstraint/field.html">field</a> property not more than one of the others can ne <code>!=null</code>.
+They corespond to the possisble parameters of Firestore`s <code>where()</code> method.
+Using <a href="firestore_helpers/QueryConstraint-class.html">QueryConstraint</a> almost always requires to create an index for this field. Check your debug output for a message from FireStore with
+a link to create them</p>
     </section>
     
 
@@ -183,7 +185,7 @@ They corespond to the possisble parameters of Firestore`s <code>where()</code> m
         </dt>
         <dd class="inherited">
           Invoked when a non-existent method or property is accessed. <a href="firestore_helpers/QueryConstraint/noSuchMethod.html">[...]</a>
-          <div class="features">inherited</div>
+          <div class="features">@pragma(&quot;vm:entry-point&quot;), inherited</div>
 </dd>
         <dt id="toString" class="callable inherited">
           <span class="name"><a href="firestore_helpers/QueryConstraint/toString.html">toString</a></span><span class="signature">(<wbr>)
@@ -251,7 +253,7 @@ They corespond to the possisble parameters of Firestore`s <code>where()</code> m
 
 <footer>
   <span class="no-break">
-    firestore_helpers 2.0.3+1
+    firestore_helpers 2.0.7
   </span>
 
 </footer>

@@ -1,6 +1,6 @@
 name: firestore_helpers
 description: Firestore helper function to create dynamic and location based queries
-version: 2.0.3+1
+version: 2.0.7
 maintainer: Thomas Burkhart (@escamoteur)
 authors: 
 - Flutter Community <flutter-community@googlegroups.com>
@@ -11,7 +11,7 @@ environment:
   sdk: '>=2.0.0-dev <3.0.0'
 
 dependencies:
-  cloud_firestore: "^0.7.3"
+  cloud_firestore: "^0.8.0"
   flutter:
     sdk: flutter
 

@@ -13,7 +13,7 @@ class DatabaseService
 
     Stream<List<Location>> getLocations({GeoPoint center, double radiusInKm})
     {
-        return getDataInArea<Location>(collection: locationCollection,
+        return getDataInArea<Location>(source: locationCollection,
         area: Area(center, radiusInKm),
         locationFieldNameInDB: 'position',
         mapper: (doc) => LocationSerializer().fromMap(doc.data),

@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-/// Used by [buildQuery] to define a list of constraints. Important besides the [field] property not more than one of the others can ne [!=null].
+/// Used by [buildQuery]  and [getDataInArea] to define a list of constraints. Important besides the [field] property not more than one of the others can ne [!=null].
 /// They corespond to the possisble parameters of Firestore`s [where()] method.
+/// Using [QueryConstraint] almost always requires to create an index for this field. Check your debug output for a message from FireStore with
+/// a link to create them
 class QueryConstraint {
   final String field;
   final dynamic isEqualTo;
@@ -25,6 +27,8 @@ class QueryConstraint {
 
 /// Used by [buildQuery] to define how the results should be ordered. The fields
 /// corespond to the possisble parameters of Firestore`s [oderby()] method.
+/// Using [OrderConstraint] almost always requires to create an index for this field. Check your debug output for a message from FireStore with
+/// a link to create them
 class OrderConstraint {
   final String field;
   final bool descending;
@@ -39,7 +43,7 @@ class OrderConstraint {
 /// [orderBy] : a list of order constraints that should be applied to the [collection] after the filtering by [constraints] was done.
 /// Important all limitation of FireStore apply for this method two on how you can query fields in collections and order them.
 Query buildQuery(
-    {CollectionReference collection,
+    {Query collection,
     List<QueryConstraint> constraints,
     List<OrderConstraint> orderBy}) {
   Query ref = collection;

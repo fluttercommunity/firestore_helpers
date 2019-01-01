@@ -86,13 +86,12 @@
       <pre class="language-dart"><code class="language-dart">double distanceInKilometers2(GeoPoint p1, GeoPoint p2) {
   final earthRadius = 6378.137; &#47;&#47; WGS84 major axis
 
-
   final lon1 = degreesToRadians(p1.longitude);
   final lon2 = degreesToRadians(p2.longitude);
   final lat1 = degreesToRadians(p1.latitude);
   final lat2 = degreesToRadians(p2.latitude);
 
-  final distance =  acos(sin(lat1)*sin(lat2)+cos(lat1)*cos(lat2)*cos(lon2 - lon1));
+  final distance = acos(sin(lat1) * sin(lat2) + cos(lat1) * cos(lat2) * cos(lon2 - lon1));
   return distance * earthRadius;
 }</code></pre>
     </section>
@@ -106,7 +105,7 @@
 
 <footer>
   <span class="no-break">
-    firestore_helpers 2.0.3+1
+    firestore_helpers 2.0.7
   </span>
 
 </footer>

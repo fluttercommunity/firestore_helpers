@@ -97,17 +97,9 @@ return the distance, in kilometers, between the two locations.</p>
   final lat1 = degreesToRadians(p1.latitude);
   final lat2 = degreesToRadians(p2.latitude);
 
-
   final r = 6378.137; &#47;&#47; WGS84 major axis
-  double c = 2 * asin(
-      sqrt(
-          pow(sin(dlat &#47; 2), 2)
-              + cos(lat1)
-              * cos(lat2)
-              * pow(sin(dlon &#47; 2) , 2)
-      )
-  );
-  return r*c;
+  double c = 2 * asin(sqrt(pow(sin(dlat &#47; 2), 2) + cos(lat1) * cos(lat2) * pow(sin(dlon &#47; 2), 2)));
+  return r * c;
 }</code></pre>
     </section>
 
@@ -120,7 +112,7 @@ return the distance, in kilometers, between the two locations.</p>
 
 <footer>
   <span class="no-break">
-    firestore_helpers 2.0.3+1
+    firestore_helpers 2.0.7
   </span>
 
 </footer>

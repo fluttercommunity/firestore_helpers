@@ -100,7 +100,7 @@ class Area {
     return new Area(gp, radiusInMeters / 1000.0);
   }
 
-  factory Area.inMiles(GeoPoint gp, double radiusMiles) {
+  factory Area.inMiles(GeoPoint gp, int radiusMiles) {
     return new Area(gp, radiusMiles * 1.60934);
   }
 
@@ -142,30 +142,21 @@ double distanceInKilometers(GeoPoint p1, GeoPoint p2) {
   final lat1 = degreesToRadians(p1.latitude);
   final lat2 = degreesToRadians(p2.latitude);
 
-
   final r = 6378.137; // WGS84 major axis
-  double c = 2 * asin(
-      sqrt(
-          pow(sin(dlat / 2), 2)
-              + cos(lat1)
-              * cos(lat2)
-              * pow(sin(dlon / 2) , 2)
-      )
-  );
-  return r*c;
+  double c = 2 * asin(sqrt(pow(sin(dlat / 2), 2) + cos(lat1) * cos(lat2) * pow(sin(dlon / 2), 2)));
+  return r * c;
 }
 
 // Spherical Law of Cosines
 double distanceInKilometers2(GeoPoint p1, GeoPoint p2) {
   final earthRadius = 6378.137; // WGS84 major axis
 
-
   final lon1 = degreesToRadians(p1.longitude);
   final lon2 = degreesToRadians(p2.longitude);
   final lat1 = degreesToRadians(p1.latitude);
   final lat2 = degreesToRadians(p2.latitude);
 
-  final distance =  acos(sin(lat1)*sin(lat2)+cos(lat1)*cos(lat2)*cos(lon2 - lon1));
+  final distance = acos(sin(lat1) * sin(lat2) + cos(lat1) * cos(lat2) * cos(lon2 - lon1));
   return distance * earthRadius;
 }
 
@@ -215,7 +206,7 @@ typedef DistanceMapper<T> = T Function(T item, double itemsDistance);
 /// Provides as Stream of lists of data items of type [T] that have a location field in a
 /// specified area sorted by the distance of to the areas center.
 /// [area]  : The area that constraints the query
-/// [collection] : The source FireStore document collection
+/// [source] : The source FireStore document collection
 /// [mapper] : mapping function that gets applied to every document in the query.
 /// Typically used to deserialize the Map returned from FireStore
 /// [locationFieldInDb] : The name of the data field in your FireStore document.
@@ -234,45 +225,63 @@ typedef DistanceMapper<T> = T Function(T item, double itemsDistance);
 /// this accessor function will prevent additional distance computing for sorting.
 /// [sortDecending] : if the resulting list should be sorted descending by the distance
 /// to the area's center. If you don't provide [loacationAccessor] or [distanceAccessor]
-/// no sorting is done
+/// no sorting is done. This Sorting is done one the client side
+/// [serverSideConstraints] : If you need some serverside filtering besides the [Area] pass a list of [QueryConstraint]
+/// [serverSideOrdering] : If you need some serverside ordering you can pass a List of [OrderConstraints]
+/// Using [serverSideConstraints] or  [serverSideOrdering] almost always requires to create an index for
+/// this field. Check your debug output for a message from FireStore with
+/// a link to create them
 Stream<List<T>> getDataInArea<T>(
     {@required Area area,
-    @required CollectionReference collection,
+    @required Query source,
     @required DocumentMapper<T> mapper,
     @required String locationFieldNameInDB,
     LocationAccessor<T> locationAccessor,
     List<ItemFilter<T>> clientSitefilters,
     DistanceMapper<T> distanceMapper,
     DistanceAccessor<T> distanceAccessor,
-    bool sortDecending = false}) {
+    bool sortDecending = false,
+    List<QueryConstraint> serverSideConstraints,
+    List<OrderConstraint> serverSideOrdering}) {
   assert((distanceAccessor == null) || (distanceMapper != null && distanceAccessor != null),);
 
+  if (serverSideOrdering != null) {
+    serverSideOrdering.insert(0, new OrderConstraint(locationFieldNameInDB, false));
+  }
+  
+  var constraints = getLocationsConstraint(locationFieldNameInDB, area);
+  if (serverSideConstraints != null)
+  {
+      constraints.addAll(serverSideConstraints);
+  }
+
   var query = buildQuery(
-      collection: collection, constraints: getLocationsConstraint(locationFieldNameInDB, area));
+      collection: source,
+      constraints: constraints,
+      orderBy: serverSideOrdering);
   return getDataFromQuery<T>(
       query: query,
       mapper: (docSnapshot) {
-        // get a real objects from FireStore 
+        // get a real objects from FireStore
         var item = mapper(docSnapshot);
         double distance;
-        if (locationAccessor != null)
-        {
-           distance = area.distanceToCenter(locationAccessor(item));
+        if (locationAccessor != null) {
+          distance = area.distanceToCenter(locationAccessor(item));
         }
         if (distance != null) {
           // We might get places outside the target circle at the corners of the surrounding square
-          if (distance > area.radiusInKilometers)
-          {
+          if (distance > area.radiusInKilometers) {
             return null;
           }
-          if (distanceMapper != null)
-          {
+          if (distanceMapper != null) {
             return distanceMapper(item, distance);
           }
         }
-          return item;
+        return item;
       },
-      clientSitefilters: clientSitefilters != null ? ()=>clientSitefilters..insert(0,(item) => item != null) : [(item) => item != null],
+      clientSitefilters: clientSitefilters != null
+          ? () => clientSitefilters..insert(0, (item) => item != null)
+          : [(item) => item != null],
       orderComparer:
           distanceAccessor != null // i this case we don't have to calculate the distance again
               ? (item1, item2) => sortDecending
