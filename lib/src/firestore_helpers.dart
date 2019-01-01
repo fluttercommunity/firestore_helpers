@@ -84,13 +84,13 @@ typedef ItemComparer<T> = int Function(T item1, T item2);
 Stream<List<T>> getDataFromQuery<T>({
   Query query,
   DocumentMapper<T> mapper,
-  List<ItemFilter<T>> clientSitefilters,
+  List<ItemFilter<T>> clientSidefilters,
   ItemComparer<T> orderComparer,
 }) {
   return query.snapshots().map((snapShot) {
     Iterable<T> items = snapShot.documents.map(mapper);
-    if (clientSitefilters != null) {
-      for (var filter in clientSitefilters) {
+    if (clientSidefilters != null) {
+      for (var filter in clientSidefilters) {
         items = items.where(filter);
       }
     }

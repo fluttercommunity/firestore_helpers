@@ -46,6 +46,7 @@
     
     
     
+    
       <li class="section-title"><a href="firestore_helpers/firestore_helpers-library.html#functions">Functions</a></li>
       <li><a href="firestore_helpers/boundingBoxCoordinates.html">boundingBoxCoordinates</a></li>
       <li><a href="firestore_helpers/buildQuery.html">buildQuery</a></li>
@@ -73,12 +74,12 @@
   </div><!--/.sidebar-offcanvas-left-->
 
   <div class="col-xs-12 col-sm-9 col-md-8 main-content">
-    <h1>getDataFromQuery&lt;<wbr><span class="type-parameter">T</span>&gt; function</h1>
+    <h1>getDataFromQuery&lt;<wbr><span class="type-parameter">T</span>&gt; function </h1>
 
     <section class="multi-line-signature">
         <span class="returntype">Stream<span class="signature">&lt;<wbr><span class="type-parameter">List<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>&gt;</span></span>
         <span class="name ">getDataFromQuery</span>
-&lt;<wbr><span class="type-parameter">T</span>&gt;(<wbr>{<span class="parameter" id="getDataFromQuery-param-query"><span class="type-annotation">Query</span> <span class="parameter-name">query</span>, </span> <span class="parameter" id="getDataFromQuery-param-mapper"><span class="type-annotation"><a href="firestore_helpers/DocumentMapper.html">DocumentMapper</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">mapper</span>, </span> <span class="parameter" id="getDataFromQuery-param-clientSitefilters"><span class="type-annotation">List<span class="signature">&lt;<wbr><span class="type-parameter"><a href="firestore_helpers/ItemFilter.html">ItemFilter</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>&gt;</span></span> <span class="parameter-name">clientSitefilters</span>, </span> <span class="parameter" id="getDataFromQuery-param-orderComparer"><span class="type-annotation"><a href="firestore_helpers/ItemComparer.html">ItemComparer</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">orderComparer</span></span> })
+&lt;<wbr><span class="type-parameter">T</span>&gt;(<wbr>{<span class="parameter" id="getDataFromQuery-param-query"><span class="type-annotation">Query</span> <span class="parameter-name">query</span>, </span> <span class="parameter" id="getDataFromQuery-param-mapper"><span class="type-annotation"><a href="firestore_helpers/DocumentMapper.html">DocumentMapper</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">mapper</span>, </span> <span class="parameter" id="getDataFromQuery-param-clientSidefilters"><span class="type-annotation">List<span class="signature">&lt;<wbr><span class="type-parameter"><a href="firestore_helpers/ItemFilter.html">ItemFilter</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>&gt;</span></span> <span class="parameter-name">clientSidefilters</span>, </span> <span class="parameter" id="getDataFromQuery-param-orderComparer"><span class="type-annotation"><a href="firestore_helpers/ItemComparer.html">ItemComparer</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">orderComparer</span></span> })
     </section>
     <section class="desc markdown">
       <p>Convenience Method to access the data of a Query as a stream while applying
@@ -97,13 +98,13 @@ will be sorted based on it on the client</p>
       <pre class="language-dart"><code class="language-dart">Stream&lt;List&lt;T&gt;&gt; getDataFromQuery&lt;T&gt;({
   Query query,
   DocumentMapper&lt;T&gt; mapper,
-  List&lt;ItemFilter&lt;T&gt;&gt; clientSitefilters,
+  List&lt;ItemFilter&lt;T&gt;&gt; clientSidefilters,
   ItemComparer&lt;T&gt; orderComparer,
 }) {
   return query.snapshots().map((snapShot) {
     Iterable&lt;T&gt; items = snapShot.documents.map(mapper);
-    if (clientSitefilters != null) {
-      for (var filter in clientSitefilters) {
+    if (clientSidefilters != null) {
+      for (var filter in clientSidefilters) {
         items = items.where(filter);
       }
     }
@@ -125,7 +126,7 @@ will be sorted based on it on the client</p>
 
 <footer>
   <span class="no-break">
-    firestore_helpers 2.0.7
+    firestore_helpers 3.0.0
   </span>
 
 </footer>

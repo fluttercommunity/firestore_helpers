@@ -1,3 +1,8 @@
+## [3.0.0] - 01.01.2019
+
+* Fix in handling client side filters
+* Fix of typo clientSite <-> clientSide
+
 ## [2.0.7] - 18.09.2018
 
 * Added:

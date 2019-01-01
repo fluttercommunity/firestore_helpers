@@ -46,6 +46,7 @@
     
     
     
+    
       <li class="section-title"><a href="firestore_helpers/firestore_helpers-library.html#functions">Functions</a></li>
       <li><a href="firestore_helpers/boundingBoxCoordinates.html">boundingBoxCoordinates</a></li>
       <li><a href="firestore_helpers/buildQuery.html">buildQuery</a></li>
@@ -73,7 +74,7 @@
   </div><!--/.sidebar-offcanvas-left-->
 
   <div class="col-xs-12 col-sm-9 col-md-8 main-content">
-    <h1>geoPointValid function</h1>
+    <h1>geoPointValid function </h1>
 
     <section class="multi-line-signature">
         <span class="returntype">bool</span>
@@ -90,10 +91,7 @@ returns <code>true</code> if these are valid geo coordinates</p>
     <section class="summary source-code" id="source">
       <h2><span>Implementation</span> </h2>
       <pre class="language-dart"><code class="language-dart">bool geoPointValid(GeoPoint point) {
-  return (point.latitude &gt;= -90 &amp;&amp;
-      point.latitude &lt;= 90 &amp;&amp;
-      point.longitude &gt;= -180 &amp;&amp;
-      point.longitude &lt;= 180);
+  return (point.latitude &gt;= -90 &amp;&amp; point.latitude &lt;= 90 &amp;&amp; point.longitude &gt;= -180 &amp;&amp; point.longitude &lt;= 180);
 }</code></pre>
     </section>
 
@@ -106,7 +104,7 @@ returns <code>true</code> if these are valid geo coordinates</p>
 
 <footer>
   <span class="no-break">
-    firestore_helpers 2.0.7
+    firestore_helpers 3.0.0
   </span>
 
 </footer>

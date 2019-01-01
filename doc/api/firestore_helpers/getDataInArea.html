@@ -46,6 +46,7 @@
     
     
     
+    
       <li class="section-title"><a href="firestore_helpers/firestore_helpers-library.html#functions">Functions</a></li>
       <li><a href="firestore_helpers/boundingBoxCoordinates.html">boundingBoxCoordinates</a></li>
       <li><a href="firestore_helpers/buildQuery.html">buildQuery</a></li>
@@ -73,12 +74,12 @@
   </div><!--/.sidebar-offcanvas-left-->
 
   <div class="col-xs-12 col-sm-9 col-md-8 main-content">
-    <h1>getDataInArea&lt;<wbr><span class="type-parameter">T</span>&gt; function</h1>
+    <h1>getDataInArea&lt;<wbr><span class="type-parameter">T</span>&gt; function </h1>
 
     <section class="multi-line-signature">
         <span class="returntype">Stream<span class="signature">&lt;<wbr><span class="type-parameter">List<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>&gt;</span></span>
         <span class="name ">getDataInArea</span>
-&lt;<wbr><span class="type-parameter">T</span>&gt;(<wbr>{<span class="parameter" id="getDataInArea-param-area"><span>@required</span> <span class="type-annotation"><a href="firestore_helpers/Area-class.html">Area</a></span> <span class="parameter-name">area</span>, </span> <span class="parameter" id="getDataInArea-param-source"><span>@required</span> <span class="type-annotation">Query</span> <span class="parameter-name">source</span>, </span> <span class="parameter" id="getDataInArea-param-mapper"><span>@required</span> <span class="type-annotation"><a href="firestore_helpers/DocumentMapper.html">DocumentMapper</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">mapper</span>, </span> <span class="parameter" id="getDataInArea-param-locationFieldNameInDB"><span>@required</span> <span class="type-annotation">String</span> <span class="parameter-name">locationFieldNameInDB</span>, </span> <span class="parameter" id="getDataInArea-param-locationAccessor"><span class="type-annotation"><a href="firestore_helpers/LocationAccessor.html">LocationAccessor</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">locationAccessor</span>, </span> <span class="parameter" id="getDataInArea-param-clientSitefilters"><span class="type-annotation">List<span class="signature">&lt;<wbr><span class="type-parameter"><a href="firestore_helpers/ItemFilter.html">ItemFilter</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>&gt;</span></span> <span class="parameter-name">clientSitefilters</span>, </span> <span class="parameter" id="getDataInArea-param-distanceMapper"><span class="type-annotation"><a href="firestore_helpers/DistanceMapper.html">DistanceMapper</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">distanceMapper</span>, </span> <span class="parameter" id="getDataInArea-param-distanceAccessor"><span class="type-annotation"><a href="firestore_helpers/DistanceAccessor.html">DistanceAccessor</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">distanceAccessor</span>, </span> <span class="parameter" id="getDataInArea-param-sortDecending"><span class="type-annotation">bool</span> <span class="parameter-name">sortDecending</span>: <span class="default-value">false</span>, </span> <span class="parameter" id="getDataInArea-param-serverSideConstraints"><span class="type-annotation">List<span class="signature">&lt;<wbr><span class="type-parameter"><a href="firestore_helpers/QueryConstraint-class.html">QueryConstraint</a></span>&gt;</span></span> <span class="parameter-name">serverSideConstraints</span>, </span> <span class="parameter" id="getDataInArea-param-serverSideOrdering"><span class="type-annotation">List<span class="signature">&lt;<wbr><span class="type-parameter"><a href="firestore_helpers/OrderConstraint-class.html">OrderConstraint</a></span>&gt;</span></span> <span class="parameter-name">serverSideOrdering</span></span> })
+&lt;<wbr><span class="type-parameter">T</span>&gt;(<wbr>{<span class="parameter" id="getDataInArea-param-area"><span>@required</span> <span class="type-annotation"><a href="firestore_helpers/Area-class.html">Area</a></span> <span class="parameter-name">area</span>, </span> <span class="parameter" id="getDataInArea-param-source"><span>@required</span> <span class="type-annotation">Query</span> <span class="parameter-name">source</span>, </span> <span class="parameter" id="getDataInArea-param-mapper"><span>@required</span> <span class="type-annotation"><a href="firestore_helpers/DocumentMapper.html">DocumentMapper</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">mapper</span>, </span> <span class="parameter" id="getDataInArea-param-locationFieldNameInDB"><span>@required</span> <span class="type-annotation">String</span> <span class="parameter-name">locationFieldNameInDB</span>, </span> <span class="parameter" id="getDataInArea-param-locationAccessor"><span class="type-annotation"><a href="firestore_helpers/LocationAccessor.html">LocationAccessor</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">locationAccessor</span>, </span> <span class="parameter" id="getDataInArea-param-clientSidefilters"><span class="type-annotation">List<span class="signature">&lt;<wbr><span class="type-parameter"><a href="firestore_helpers/ItemFilter.html">ItemFilter</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>&gt;</span></span> <span class="parameter-name">clientSidefilters</span>, </span> <span class="parameter" id="getDataInArea-param-distanceMapper"><span class="type-annotation"><a href="firestore_helpers/DistanceMapper.html">DistanceMapper</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">distanceMapper</span>, </span> <span class="parameter" id="getDataInArea-param-distanceAccessor"><span class="type-annotation"><a href="firestore_helpers/DistanceAccessor.html">DistanceAccessor</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">distanceAccessor</span>, </span> <span class="parameter" id="getDataInArea-param-sortDecending"><span class="type-annotation">bool</span> <span class="parameter-name">sortDecending</span>: <span class="default-value">false</span>, </span> <span class="parameter" id="getDataInArea-param-serverSideConstraints"><span class="type-annotation">List<span class="signature">&lt;<wbr><span class="type-parameter"><a href="firestore_helpers/QueryConstraint-class.html">QueryConstraint</a></span>&gt;</span></span> <span class="parameter-name">serverSideConstraints</span>, </span> <span class="parameter" id="getDataInArea-param-serverSideOrdering"><span class="type-annotation">List<span class="signature">&lt;<wbr><span class="type-parameter"><a href="firestore_helpers/OrderConstraint-class.html">OrderConstraint</a></span>&gt;</span></span> <span class="parameter-name">serverSideOrdering</span></span> })
     </section>
     <section class="desc markdown">
       <p>Provides as Stream of lists of data items of type <code>T</code> that have a location field in a
@@ -119,7 +120,7 @@ a link to create them</p>
     @required DocumentMapper&lt;T&gt; mapper,
     @required String locationFieldNameInDB,
     LocationAccessor&lt;T&gt; locationAccessor,
-    List&lt;ItemFilter&lt;T&gt;&gt; clientSitefilters,
+    List&lt;ItemFilter&lt;T&gt;&gt; clientSidefilters,
     DistanceMapper&lt;T&gt; distanceMapper,
     DistanceAccessor&lt;T&gt; distanceAccessor,
     bool sortDecending = false,
@@ -132,15 +133,21 @@ a link to create them</p>
   }
 
   var constraints = getLocationsConstraint(locationFieldNameInDB, area);
-  if (serverSideConstraints != null)
-  {
-      constraints.addAll(serverSideConstraints);
+  if (serverSideConstraints != null) {
+    constraints.addAll(serverSideConstraints);
   }
 
-  var query = buildQuery(
-      collection: source,
-      constraints: constraints,
-      orderBy: serverSideOrdering);
+  var query = buildQuery(collection: source, constraints: constraints, orderBy: serverSideOrdering);
+
+
+  &#47;&#47; as we replace items ouside the target circle at the corners of the surrounding square with null we have to filter
+  &#47;&#47; them out on the clients side
+  if (clientSidefilters != null) {
+    clientSidefilters..insert(0, (item) =&gt; item != null);
+  } else {
+    clientSidefilters = [(item) =&gt; item != null];
+  }
+
   return getDataFromQuery&lt;T&gt;(
       query: query,
       mapper: (docSnapshot) {
@@ -149,8 +156,6 @@ a link to create them</p>
         double distance;
         if (locationAccessor != null) {
           distance = area.distanceToCenter(locationAccessor(item));
-        }
-        if (distance != null) {
           &#47;&#47; We might get places outside the target circle at the corners of the surrounding square
           if (distance &gt; area.radiusInKilometers) {
             return null;
@@ -161,23 +166,20 @@ a link to create them</p>
         }
         return item;
       },
-      clientSitefilters: clientSitefilters != null
-          ? () =&gt; clientSitefilters..insert(0, (item) =&gt; item != null)
-          : [(item) =&gt; item != null],
-      orderComparer:
-          distanceAccessor != null &#47;&#47; i this case we don&#39;t have to calculate the distance again
+      clientSidefilters: clientSidefilters,
+      orderComparer: distanceAccessor != null &#47;&#47; i this case we don&#39;t have to calculate the distance again
+          ? (item1, item2) =&gt; sortDecending
+              ? distanceAccessor(item1).compareTo(distanceAccessor(item2))
+              : distanceAccessor(item2).compareTo(distanceAccessor(item1))
+          : locationAccessor != null
               ? (item1, item2) =&gt; sortDecending
-                  ? distanceAccessor(item1).compareTo(distanceAccessor(item2))
-                  : distanceAccessor(item2).compareTo(distanceAccessor(item1))
-              : locationAccessor != null
-                  ? (item1, item2) =&gt; sortDecending
-                      ? area
-                          .distanceToCenter(locationAccessor(item1))
-                          .compareTo(area.distanceToCenter(locationAccessor(item2)))
-                      : area
-                          .distanceToCenter(locationAccessor(item2))
-                          .compareTo(area.distanceToCenter(locationAccessor(item1)))
-                  : null);
+                  ? area
+                      .distanceToCenter(locationAccessor(item1))
+                      .compareTo(area.distanceToCenter(locationAccessor(item2)))
+                  : area
+                      .distanceToCenter(locationAccessor(item2))
+                      .compareTo(area.distanceToCenter(locationAccessor(item1)))
+              : null);
 }</code></pre>
     </section>
 
@@ -190,7 +192,7 @@ a link to create them</p>
 
 <footer>
   <span class="no-break">
-    firestore_helpers 2.0.7
+    firestore_helpers 3.0.0
   </span>
 
 </footer>

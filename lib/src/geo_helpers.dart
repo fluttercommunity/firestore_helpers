@@ -234,7 +234,7 @@ Stream<List<T>> getDataInArea<T>(
     @required DocumentMapper<T> mapper,
     @required String locationFieldNameInDB,
     LocationAccessor<T> locationAccessor,
-    List<ItemFilter<T>> clientSitefilters,
+    List<ItemFilter<T>> clientSidefilters,
     DistanceMapper<T> distanceMapper,
     DistanceAccessor<T> distanceAccessor,
     bool sortDecending = false,
@@ -253,10 +253,13 @@ Stream<List<T>> getDataInArea<T>(
 
   var query = buildQuery(collection: source, constraints: constraints, orderBy: serverSideOrdering);
 
-  if (clientSitefilters != null) {
-    clientSitefilters..insert(0, (item) => item != null);
+
+  // as we replace items ouside the target circle at the corners of the surrounding square with null we have to filter 
+  // them out on the clients side
+  if (clientSidefilters != null) {
+    clientSidefilters..insert(0, (item) => item != null);
   } else {
-    clientSitefilters = [(item) => item != null];
+    clientSidefilters = [(item) => item != null];
   }
 
   return getDataFromQuery<T>(
@@ -267,8 +270,6 @@ Stream<List<T>> getDataInArea<T>(
         double distance;
         if (locationAccessor != null) {
           distance = area.distanceToCenter(locationAccessor(item));
-        }
-        if (distance != null) {
           // We might get places outside the target circle at the corners of the surrounding square
           if (distance > area.radiusInKilometers) {
             return null;
@@ -279,7 +280,7 @@ Stream<List<T>> getDataInArea<T>(
         }
         return item;
       },
-      clientSitefilters: clientSitefilters,
+      clientSidefilters: clientSidefilters,
       orderComparer: distanceAccessor != null // i this case we don't have to calculate the distance again
           ? (item1, item2) => sortDecending
               ? distanceAccessor(item1).compareTo(distanceAccessor(item2))
