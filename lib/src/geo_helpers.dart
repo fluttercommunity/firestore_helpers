@@ -24,10 +24,7 @@ bool coordinatesValid(double latitude, double longitude) {
 /// returns [true] if these are valid geo coordinates
 ///
 bool geoPointValid(GeoPoint point) {
-  return (point.latitude >= -90 &&
-      point.latitude <= 90 &&
-      point.longitude >= -180 &&
-      point.longitude <= 180);
+  return (point.latitude >= -90 && point.latitude <= 90 && point.longitude >= -180 && point.longitude <= 180);
 }
 
 ///
@@ -248,17 +245,20 @@ Stream<List<T>> getDataInArea<T>(
   if (serverSideOrdering != null) {
     serverSideOrdering.insert(0, new OrderConstraint(locationFieldNameInDB, false));
   }
-  
+
   var constraints = getLocationsConstraint(locationFieldNameInDB, area);
-  if (serverSideConstraints != null)
-  {
-      constraints.addAll(serverSideConstraints);
+  if (serverSideConstraints != null) {
+    constraints.addAll(serverSideConstraints);
   }
 
-  var query = buildQuery(
-      collection: source,
-      constraints: constraints,
-      orderBy: serverSideOrdering);
+  var query = buildQuery(collection: source, constraints: constraints, orderBy: serverSideOrdering);
+
+  if (clientSitefilters != null) {
+    clientSitefilters..insert(0, (item) => item != null);
+  } else {
+    clientSitefilters = [(item) => item != null];
+  }
+
   return getDataFromQuery<T>(
       query: query,
       mapper: (docSnapshot) {
@@ -279,21 +279,18 @@ Stream<List<T>> getDataInArea<T>(
         }
         return item;
       },
-      clientSitefilters: clientSitefilters != null
-          ? () => clientSitefilters..insert(0, (item) => item != null)
-          : [(item) => item != null],
-      orderComparer:
-          distanceAccessor != null // i this case we don't have to calculate the distance again
+      clientSitefilters: clientSitefilters,
+      orderComparer: distanceAccessor != null // i this case we don't have to calculate the distance again
+          ? (item1, item2) => sortDecending
+              ? distanceAccessor(item1).compareTo(distanceAccessor(item2))
+              : distanceAccessor(item2).compareTo(distanceAccessor(item1))
+          : locationAccessor != null
               ? (item1, item2) => sortDecending
-                  ? distanceAccessor(item1).compareTo(distanceAccessor(item2))
-                  : distanceAccessor(item2).compareTo(distanceAccessor(item1))
-              : locationAccessor != null
-                  ? (item1, item2) => sortDecending
-                      ? area
-                          .distanceToCenter(locationAccessor(item1))
-                          .compareTo(area.distanceToCenter(locationAccessor(item2)))
-                      : area
-                          .distanceToCenter(locationAccessor(item2))
-                          .compareTo(area.distanceToCenter(locationAccessor(item1)))
-                  : null);
+                  ? area
+                      .distanceToCenter(locationAccessor(item1))
+                      .compareTo(area.distanceToCenter(locationAccessor(item2)))
+                  : area
+                      .distanceToCenter(locationAccessor(item2))
+                      .compareTo(area.distanceToCenter(locationAccessor(item1)))
+              : null);
 }
