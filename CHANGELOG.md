@@ -1,3 +1,8 @@
+## [3.1.0] - 04.02.2019
+
+* Bump up the version to use cloud_firestore 0.9.0, 
+* add arrayContains of constraints
+
 ## [3.0.0] - 01.01.2019
 
 * Fix in handling client side filters
