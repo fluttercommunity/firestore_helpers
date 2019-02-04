@@ -6,7 +6,7 @@
 
 # FirestoreHelpers
 
-FireStore is a great database that is easy to work with. To make live even easier here is this package. It contains functions build queries dynamically and for location based queries.
+FireStore is a great database that is easy to work with. To make life even easier here is this package. It contains functions build queries dynamically and for location based queries.
 
 The necessary math for the geographical calculations were ported from [this JS source on SO](https://stackoverflow.com/questions/46630507/how-to-run-a-geo-nearby-query-with-firestore) by [Stanton Parham](https://github.com/stparham)
 
