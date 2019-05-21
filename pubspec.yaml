@@ -2,16 +2,16 @@ name: firestore_helpers
 description: Firestore helper function to create dynamic and location based queries
 version: 3.1.0
 maintainer: Thomas Burkhart (@escamoteur)
-authors: 
-- Flutter Community <flutter-community@googlegroups.com>
-- Thomas Burkhart <burkhartsengineering@gmail.com>
+authors:
+  - Flutter Community <flutter-community@googlegroups.com>
+  - Thomas Burkhart <burkhartsengineering@gmail.com>
 homepage: https://github.com/fluttercommunity/firestore_helpers
 documentation:
 environment:
-  sdk: '>=2.0.0-dev <3.0.0'
+  sdk: ">=2.0.0-dev <3.0.0"
 
 dependencies:
-  cloud_firestore: "^0.9.0"
+  cloud_firestore: "^0.11.0"
   flutter:
     sdk: flutter
 
@@ -25,7 +25,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-
   # To add assets to your package, add an assets section, like this:
   # assets:
   #  - images/a_dot_burr.jpeg
@@ -36,7 +35,6 @@ flutter:
   #
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
-
   # To add custom fonts to your package, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
