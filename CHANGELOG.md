@@ -1,3 +1,7 @@
+## [3.2.0] - 22.05.2019
+
+* Bump `cloud_firestore` version to 0.11.0+2, 
+
 ## [3.1.0] - 04.02.2019
 
 * Bump up the version to use cloud_firestore 0.9.0, 
