@@ -1,3 +1,7 @@
+## [3.2.1+1] - 07.11.2019
+
+* Bump `cloud_firestore` version to 0.12.9+6,
+
 ## [3.2.0+1] - 26.06.2019
 
 * updated logo in readme
