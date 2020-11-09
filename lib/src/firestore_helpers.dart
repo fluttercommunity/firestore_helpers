@@ -91,7 +91,7 @@ Stream<List<T>> getDataFromQuery<T>({
   ItemComparer<T> orderComparer,
 }) {
   return query.snapshots().map((snapShot) {
-    Iterable<T> items = snapShot.documents.map(mapper);
+    Iterable<T> items = snapShot.docs.map(mapper);
     if (clientSidefilters != null) {
       for (var filter in clientSidefilters) {
         items = items.where(filter);

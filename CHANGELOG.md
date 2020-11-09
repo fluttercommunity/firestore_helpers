@@ -1,3 +1,7 @@
+## [3.2.2] - 06.11.2020
+
+* Bump `cloud_firestore` and fix deprecated properties
+
 ## [3.2.1+1] - 07.11.2019
 
 * Bump `cloud_firestore` version to 0.12.9+6,
