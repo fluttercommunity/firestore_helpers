@@ -6,16 +6,15 @@ class DatabaseService {
   final locationCollection = FirebaseFirestore.instance.collection("locations");
 
   Future<void> createLocation(Location loc) async {
-    locationCollection.doc().set(LocationSerializer().toMap(loc));
+    locationCollection.doc().set(loc.toMap());
   }
 
-  Stream<List<Location>> getLocations({GeoPoint center, double radiusInKm}) {
+  Stream<List<Location>> getLocations({required GeoPoint center, required double radiusInKm}) {
     return getDataInArea<Location>(
         source: locationCollection,
         area: Area(center, radiusInKm),
         locationFieldNameInDB: 'position',
-        mapper: (doc) =>
-            LocationSerializer().fromMap(doc.data as Map<String, dynamic>),
+        mapper: (doc) => Location.fromMap(doc.data as Map<String, dynamic>),
         locationAccessor: (item) => item.position,
         // The distancemapper is applied after the mapper
         distanceMapper: (item, dist) {

@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -33,15 +33,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  double newLatitude;
-  double newLongitude;
-  String newName;
+  double? newLatitude;
+  double? newLongitude;
+  String? newName;
 
   double currentLatitude = 35.681167;
   double currentLongitude = 139.767052;
   double currentRadius = 1000;
 
-  final DatabaseService dbService = new DatabaseService();
+  final DatabaseService dbService = DatabaseService();
 
   @override
   Widget build(BuildContext context) {
@@ -63,8 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 Expanded(
                   child: TextField(
-                    controller:
-                        TextEditingController(text: currentLatitude.toString()),
+                    controller: TextEditingController(text: currentLatitude.toString()),
                     onChanged: (s) => currentLatitude = double.parse(s),
                     decoration: InputDecoration(
                       hintText: 'lat',
@@ -76,8 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 Expanded(
                   child: TextField(
-                    controller: TextEditingController(
-                        text: currentLongitude.toString()),
+                    controller: TextEditingController(text: currentLongitude.toString()),
                     onChanged: (s) => currentLongitude = double.parse(s),
                     decoration: InputDecoration(hintText: 'long'),
                   ),
@@ -93,8 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 Expanded(
                   child: TextField(
-                    controller:
-                        TextEditingController(text: currentRadius.toString()),
+                    controller: TextEditingController(text: currentRadius.toString()),
                     onChanged: (s) => currentRadius = double.parse(s),
                     decoration: InputDecoration(
                       hintText: 'radius in km',
@@ -113,16 +110,15 @@ class _MyHomePageState extends State<MyHomePage> {
             Expanded(
               child: StreamBuilder<List<Location>>(
                 stream: dbService.getLocations(
-                    center: GeoPoint(currentLatitude, currentLongitude),
-                    radiusInKm: currentRadius),
+                    center: GeoPoint(currentLatitude, currentLongitude), radiusInKm: currentRadius),
                 builder: (context, snapShot) {
-                  if (!snapShot.hasData || snapShot.data.isEmpty) {
+                  if (!snapShot.hasData || (snapShot.data?.isEmpty ?? true)) {
                     return Center(child: Text('No Data'));
                   } else {
                     return ListView.builder(
-                        itemCount: snapShot.data.length,
+                        itemCount: snapShot.data!.length,
                         itemBuilder: (context, index) {
-                          var item = snapShot.data[index];
+                          var item = snapShot.data![index];
 
                           return ListTile(
                             title: Text(
@@ -153,11 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 RaisedButton(
                   child: Text('Add'),
-                  onPressed: newName != null &&
-                          newLatitude != null &&
-                          newLongitude != null
-                      ? addLocation
-                      : null,
+                  onPressed: newName != null && newLatitude != null && newLongitude != null ? addLocation : null,
                 ),
               ],
             ),
@@ -170,8 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 Expanded(
                   child: TextField(
-                    onChanged: (s) =>
-                        setState(() => newLatitude = double.parse(s)),
+                    onChanged: (s) => setState(() => newLatitude = double.parse(s)),
                     decoration: InputDecoration(
                       hintText: 'lat',
                     ),
@@ -182,8 +173,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 Expanded(
                   child: TextField(
-                    onChanged: (s) =>
-                        setState(() => newLongitude = double.parse(s)),
+                    onChanged: (s) => setState(() => newLongitude = double.parse(s)),
                     decoration: InputDecoration(hintText: 'long'),
                   ),
                 )
@@ -196,8 +186,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> addLocation() async {
-    await dbService.createLocation(
-        new Location(newName, GeoPoint(newLatitude, newLongitude)));
+    await dbService.createLocation(new Location(newName!, GeoPoint(newLatitude!, newLongitude!)));
     newName = null;
     newLatitude = null;
     newLongitude = null;

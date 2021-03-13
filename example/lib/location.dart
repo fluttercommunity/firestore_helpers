@@ -1,20 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:jaguar_serializer/jaguar_serializer.dart';
-
-part 'location.jser.dart';
 
 class Location {
   final String name;
-  @pass // GeopPoints should not be serialized but passed as they are to FireStore
+  // GeopPoints should not be serialized but passed as they are to FireStore
   final GeoPoint position;
 
-  @ignore // we don't store the distance. This will be filled in during reading
-  double distance;
+  // we don't store the distance. This will be filled in during reading
+  double? distance;
 
   Location(this.name, this.position);
-}
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> ret = <String, dynamic>{};
+    ret['name'] = name;
+    ret['position'] = position;
+    return ret;
+  }
 
-// We use jaguar_serializer to serialize the Location object
-@GenSerializer()
-class LocationSerializer extends Serializer<Location>
-    with _$LocationSerializer {}
+  static Location fromMap(Map map) {
+    final obj =
+        new Location(map['name'] as String? ?? 'NoLocationName', map['position'] as GeoPoint? ?? GeoPoint(-1, -1));
+    return obj;
+  }
+}

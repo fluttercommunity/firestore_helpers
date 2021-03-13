@@ -1,3 +1,7 @@
+## [4.0.0] - 13.03.2021
+
+* Null safety version
+
 ## [3.2.2] - 06.11.2020
 
 * Bump `cloud_firestore` and fix deprecated properties

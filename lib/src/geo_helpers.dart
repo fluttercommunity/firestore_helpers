@@ -14,10 +14,7 @@ import 'package:meta/meta.dart';
 /// returns [true] if these are valid geo coordinates
 ///
 bool coordinatesValid(double latitude, double longitude) {
-  return (latitude >= -90 &&
-      latitude <= 90 &&
-      longitude >= -180 &&
-      longitude <= 180);
+  return (latitude >= -90 && latitude <= 90 && longitude >= -180 && longitude <= 180);
 }
 
 ///
@@ -27,10 +24,7 @@ bool coordinatesValid(double latitude, double longitude) {
 /// returns [true] if these are valid geo coordinates
 ///
 bool geoPointValid(GeoPoint point) {
-  return (point.latitude >= -90 &&
-      point.latitude <= 90 &&
-      point.longitude >= -180 &&
-      point.longitude <= 180);
+  return (point.latitude >= -90 && point.latitude <= 90 && point.longitude >= -180 && point.longitude <= 180);
 }
 
 ///
@@ -83,7 +77,7 @@ class GeoBoundingBox {
   final GeoPoint swCorner;
   final GeoPoint neCorner;
 
-  GeoBoundingBox({this.swCorner, this.neCorner});
+  GeoBoundingBox({required this.swCorner, required this.neCorner});
 }
 
 ///
@@ -123,16 +117,12 @@ GeoBoundingBox boundingBoxCoordinates(Area area) {
   final latitudeNorth = min(90.0, area.center.latitude + latDegrees);
   final latitudeSouth = max(-90.0, area.center.latitude - latDegrees);
   // calculate longitude based on current latitude
-  final longDegsNorth =
-      kilometersToLongitudeDegrees(area.radiusInKilometers, latitudeNorth);
-  final longDegsSouth =
-      kilometersToLongitudeDegrees(area.radiusInKilometers, latitudeSouth);
+  final longDegsNorth = kilometersToLongitudeDegrees(area.radiusInKilometers, latitudeNorth);
+  final longDegsSouth = kilometersToLongitudeDegrees(area.radiusInKilometers, latitudeSouth);
   final longDegs = max(longDegsNorth, longDegsSouth);
   return new GeoBoundingBox(
-      swCorner: new GeoPoint(
-          latitudeSouth, wrapLongitude(area.center.longitude - longDegs)),
-      neCorner: new GeoPoint(
-          latitudeNorth, wrapLongitude(area.center.longitude + longDegs)));
+      swCorner: new GeoPoint(latitudeSouth, wrapLongitude(area.center.longitude - longDegs)),
+      neCorner: new GeoPoint(latitudeNorth, wrapLongitude(area.center.longitude + longDegs)));
 }
 
 ///
@@ -150,9 +140,7 @@ double distanceInKilometers(GeoPoint p1, GeoPoint p2) {
   final lat2 = degreesToRadians(p2.latitude);
 
   final r = 6378.137; // WGS84 major axis
-  double c = 2 *
-      asin(sqrt(pow(sin(dlat / 2), 2) +
-          cos(lat1) * cos(lat2) * pow(sin(dlon / 2), 2)));
+  double c = 2 * asin(sqrt(pow(sin(dlat / 2), 2) + cos(lat1) * cos(lat2) * pow(sin(dlon / 2), 2)));
   return r * c;
 }
 
@@ -165,8 +153,7 @@ double distanceInKilometers2(GeoPoint p1, GeoPoint p2) {
   final lat1 = degreesToRadians(p1.latitude);
   final lat2 = degreesToRadians(p2.latitude);
 
-  final distance =
-      acos(sin(lat1) * sin(lat2) + cos(lat1) * cos(lat2) * cos(lon2 - lon1));
+  final distance = acos(sin(lat1) * sin(lat2) + cos(lat1) * cos(lat2) * cos(lon2 - lon1));
   return distance * earthRadius;
 }
 
@@ -242,25 +229,23 @@ typedef DistanceMapper<T> = T Function(T item, double itemsDistance);
 /// this field. Check your debug output for a message from FireStore with
 /// a link to create them
 Stream<List<T>> getDataInArea<T>(
-    {@required Area area,
-    @required Query source,
-    @required DocumentMapper<T> mapper,
-    @required String locationFieldNameInDB,
-    LocationAccessor<T> locationAccessor,
-    List<ItemFilter<T>> clientSidefilters,
-    DistanceMapper<T> distanceMapper,
-    DistanceAccessor<T> distanceAccessor,
+    {required Area area,
+    required Query source,
+    required DocumentMapper<T> mapper,
+    required String locationFieldNameInDB,
+    LocationAccessor<T>? locationAccessor,
+    List<ItemFilter<T>>? clientSidefilters,
+    DistanceMapper<T>? distanceMapper,
+    DistanceAccessor<T>? distanceAccessor,
     bool sortDecending = false,
-    List<QueryConstraint> serverSideConstraints,
-    List<OrderConstraint> serverSideOrdering}) {
+    List<QueryConstraint>? serverSideConstraints,
+    List<OrderConstraint>? serverSideOrdering}) {
   assert(
-    (distanceAccessor == null) ||
-        (distanceMapper != null && distanceAccessor != null),
+    (distanceAccessor == null) || (distanceMapper != null && distanceAccessor != null),
   );
 
   if (serverSideOrdering != null) {
-    serverSideOrdering.insert(
-        0, new OrderConstraint(locationFieldNameInDB, false));
+    serverSideOrdering.insert(0, new OrderConstraint(locationFieldNameInDB, false));
   }
 
   var constraints = getLocationsConstraint(locationFieldNameInDB, area);
@@ -268,10 +253,7 @@ Stream<List<T>> getDataInArea<T>(
     constraints.addAll(serverSideConstraints);
   }
 
-  var query = buildQuery(
-      collection: source,
-      constraints: constraints,
-      orderBy: serverSideOrdering);
+  var query = buildQuery(collection: source, constraints: constraints, orderBy: serverSideOrdering);
 
   // as we replace items ouside the target circle at the corners of the surrounding square with null we have to filter
   // them out on the clients side
@@ -281,14 +263,14 @@ Stream<List<T>> getDataInArea<T>(
     clientSidefilters = [(item) => item != null];
   }
 
-  return getDataFromQuery<T>(
+  return getDataFromQuery<T/*!*/>(
       query: query,
       mapper: (docSnapshot) {
         // get a real objects from FireStore
         var item = mapper(docSnapshot);
         double distance;
         if (locationAccessor != null) {
-          distance = area.distanceToCenter(locationAccessor(item));
+          distance = area.distanceToCenter(locationAccessor(item!));
           // We might get places outside the target circle at the corners of the surrounding square
           if (distance > area.radiusInKilometers) {
             return null;
@@ -300,8 +282,7 @@ Stream<List<T>> getDataInArea<T>(
         return item;
       },
       clientSidefilters: clientSidefilters,
-      orderComparer: distanceAccessor !=
-              null // i this case we don't have to calculate the distance again
+      orderComparer: distanceAccessor != null // i this case we don't have to calculate the distance again
           ? (item1, item2) => sortDecending
               ? distanceAccessor(item1).compareTo(distanceAccessor(item2))
               : distanceAccessor(item2).compareTo(distanceAccessor(item1))
