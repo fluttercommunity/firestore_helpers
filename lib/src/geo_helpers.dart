@@ -5,7 +5,6 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firestore_helpers/firestore_helpers.dart';
-import 'package:meta/meta.dart';
 
 ///
 /// Checks if these coordinates are valid geo coordinates.
@@ -263,7 +262,7 @@ Stream<List<T>> getDataInArea<T>(
     clientSidefilters = [(item) => item != null];
   }
 
-  return getDataFromQuery<T/*!*/>(
+  return getDataFromQuery<T /*!*/ >(
       query: query,
       mapper: (docSnapshot) {
         // get a real objects from FireStore
