@@ -1,3 +1,7 @@
+## [4.0.0+1] - 15.03.2021
+
+* Added parameters to `QueryConstraint`: `arrayContainsAny`, `whereIn` and `whereNotIn`. 
+
 ## [4.0.0] - 13.03.2021
 
 * Null safety version
