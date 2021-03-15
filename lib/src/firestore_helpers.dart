@@ -15,6 +15,9 @@ class QueryConstraint {
   final dynamic isGreaterThanOrEqualTo;
   final bool? isNull;
   final dynamic arrayContains;
+  final List<dynamic>? arrayContainsAny;
+  final List<dynamic>? whereIn;
+  final List<dynamic>? whereNotIn;
 
   QueryConstraint(
       {required this.field,
@@ -24,7 +27,10 @@ class QueryConstraint {
       this.isGreaterThan,
       this.isGreaterThanOrEqualTo,
       this.isNull,
-      this.arrayContains});
+      this.arrayContains,
+      this.arrayContainsAny,
+      this.whereIn,
+      this.whereNotIn});
 }
 
 /// Used by [buildQuery] to define how the results should be ordered. The fields
@@ -44,7 +50,10 @@ class OrderConstraint {
 /// [constraints] : a list of constraints that should be applied to the [collection].
 /// [orderBy] : a list of order constraints that should be applied to the [collection] after the filtering by [constraints] was done.
 /// Important all limitation of FireStore apply for this method two on how you can query fields in collections and order them.
-Query buildQuery({required Query collection, List<QueryConstraint>? constraints, List<OrderConstraint>? orderBy}) {
+Query buildQuery(
+    {required Query collection,
+    List<QueryConstraint>? constraints,
+    List<OrderConstraint>? orderBy}) {
   Query ref = collection;
 
   if (constraints != null) {
@@ -56,7 +65,10 @@ Query buildQuery({required Query collection, List<QueryConstraint>? constraints,
           isLessThan: constraint.isLessThan,
           isLessThanOrEqualTo: constraint.isLessThanOrEqualTo,
           isNull: constraint.isNull,
-          arrayContains: constraint.arrayContains);
+          arrayContains: constraint.arrayContains,
+          arrayContainsAny: constraint.arrayContainsAny,
+          whereIn: constraint.whereIn,
+          whereNotIn: constraint.whereNotIn);
     }
   }
   if (orderBy != null) {
@@ -81,14 +93,16 @@ typedef ItemComparer<T> = int Function(T item1, T item2);
 /// on the result on the client side
 /// [orderComparer] : optional comparisson function. If provided your resulting data
 /// will be sorted based on it on the client
-Stream<List<T >> getDataFromQuery<T>({
+Stream<List<T>> getDataFromQuery<T>({
   required Query query,
-  required DocumentMapper<T > mapper,
+  required DocumentMapper<T> mapper,
   List<ItemFilter<T>>? clientSidefilters,
   ItemComparer<T>? orderComparer,
 }) {
   return query.snapshots().map((snapShot) {
-    Iterable<T> items = snapShot.docs.map(mapper).where((element) => element != null) as Iterable<T>;
+    Iterable<T> items = snapShot.docs
+        .map(mapper)
+        .where((element) => element != null) as Iterable<T>;
     if (clientSidefilters != null) {
       for (var filter in clientSidefilters) {
         items = items.where(filter);
