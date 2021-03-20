@@ -240,7 +240,7 @@ Stream<List<T>> getDataInArea<T>(
     List<QueryConstraint>? serverSideConstraints,
     List<OrderConstraint>? serverSideOrdering}) {
   assert(
-    (distanceAccessor == null) || (distanceMapper != null && distanceAccessor != null),
+    (distanceMapper != null && distanceAccessor != null) || (distanceAccessor == null),
   );
 
   if (serverSideOrdering != null) {
