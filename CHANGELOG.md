@@ -1,3 +1,7 @@
+## [4.0.0+2] - 20.03.2021
+
+* Warning fixes in `getDataInArea`
+
 ## [4.0.0+1] - 15.03.2021
 
 * Added parameters to `QueryConstraint`: `arrayContainsAny`, `whereIn` and `whereNotIn`. 
